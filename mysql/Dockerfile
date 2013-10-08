@@ -41,6 +41,6 @@ VOLUME ["/var/lib/mysql"]
 
 # Start mysql server
 # "mysqld_safe is the recommended way to start a mysqld server on Unix."
-ENTRYPOINT ["mysqld_safe"]
+CMD ["mysqld_safe"]
 
 # EXPOSE 3306
