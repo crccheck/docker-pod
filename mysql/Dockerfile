@@ -1,3 +1,5 @@
+# # Installs the current `mysql-server`, version 5.5 at the time of writing
+#
 # Getting Started
 #
 #     # cleanup old image
@@ -19,7 +21,8 @@
 # * http://dischord.org/blog/2013/08/13/docker-and-owncloud-part-2/
 
 FROM ubuntu:12.04
-# Installs the current `mysql-server`, version 5.5 at the time of writing
+MAINTAINER Chris <c@crccheck.com>
+
 
 RUN apt-get update
 RUN apt-get -y install mysql-server
@@ -32,6 +35,9 @@ ADD mysql-listen.cnf /etc/mysql/conf.d/mysql-listen.cnf
 ADD mysql-setup.sh /tmp/mysql-setup.sh
 RUN /bin/sh /tmp/mysql-setup.sh
 
+# Put mysql data in a volume
+# https://github.com/dotcloud/docker/wiki/Docker-0.3.0-release-note%2C-May-6-2013#data-volumes
+VOLUME ["/var/lib/mysql"]
 
 # Start mysql server
 # "mysqld_safe is the recommended way to start a mysqld server on Unix."
