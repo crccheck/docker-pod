@@ -20,7 +20,7 @@
 # * https://github.com/paulczar/docker-mysql/blob/master/Dockerfile
 # * http://dischord.org/blog/2013/08/13/docker-and-owncloud-part-2/
 
-FROM ubuntu:12.04
+FROM ubuntu:precise
 MAINTAINER Chris <c@crccheck.com>
 
 
