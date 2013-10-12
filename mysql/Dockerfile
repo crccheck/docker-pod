@@ -27,18 +27,16 @@ MAINTAINER Chris <c@crccheck.com>
 RUN apt-get update
 RUN apt-get -y install mysql-server
 
-# TODO
-# set mysql user's uid to some artificially high number
-# this makes mounting remove volumes a little cleaner
-# RUN usermod -u 10001 mysql
-# RUN groupmod -g 10001 mysql
-
 # Load extra mysql config files
 ADD mysql-listen.cnf /etc/mysql/conf.d/mysql-listen.cnf
 
+ADD setup.sh /tmp/setup.sh
+RUN /bin/sh /tmp/setup.sh
+ADD fix-permissions.sh /usr/local/bin/fix-permissions.sh
+
 # Put mysql data in a volume
 # https://github.com/dotcloud/docker/wiki/Docker-0.3.0-release-note%2C-May-6-2013#data-volumes
-VOLUME ["/var/lib/mysql"]
+VOLUME ["/mnt/mysql"]
 
 # Start mysql server
 ADD start.sh /usr/local/bin/start.sh

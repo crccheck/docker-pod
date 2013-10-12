@@ -2,5 +2,4 @@
 
 [mysqld]
 bind-address            = 0.0.0.0
-# TODO set the volume to use a non-standard data directory like /mnt/mysql
-# datadir                 = /mnt/mysql
+datadir                 = /mnt/mysql

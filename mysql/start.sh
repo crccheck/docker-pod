@@ -1,9 +1,10 @@
 #!/bin/bash
 
-DATA_DIR=/var/lib/mysql
+DATA_DIR=/mnt/mysql
+
+sh /usr/local/bin/fix-permissions.sh
 
 if [ ! -d $DATA_DIR/mysql ]; then
-    chown -R mysql:mysql $DATA_DIR
     mysql_install_db
 
     /usr/bin/mysqld_safe --verbose &
