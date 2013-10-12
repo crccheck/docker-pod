@@ -2,4 +2,5 @@
 
 /usr/bin/mysqld_safe &
 sleep 2
-mysql -p --execute="GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;"
+# CREATE USER is implied
+mysql -p --execute="GRANT ALL PRIVILEGES ON *.* TO 'docker'@'%' WITH GRANT OPTION;"
