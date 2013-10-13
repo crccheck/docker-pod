@@ -1,8 +1,14 @@
-# # Installs Postgresql 9.2 and Postgis 2.0
+# ## Postgresql 9.2 and Postgis 2.0
 #
-# ## Getting Started
+# A Postgresql 9.2 + Postgis 2.0 image that supports external volumes.
 #
-#     docker run -d -p 5432:5432 postgis
+# ### Example Usage
+#
+#     docker run -d -p 5432:5432 -v ~/volumes/postgres/:/mnt/postgres/ postgis
+#
+# References:
+# * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
+# * http://www.ubuntuupdates.org/ppa/postgresql
 
 FROM ubuntu:precise
 MAINTAINER Chris <c@crccheck.com>
@@ -15,8 +21,6 @@ RUN apt-get install -y wget
 VOLUME ["/mnt/postgres/"]
 
 # Add Postgres PPA
-# http://www.ubuntuupdates.org/ppa/postgresql
-
 # --no-check-certificate workaround for:
 #     "ERROR: cannot verify www.postgresql.org's certificate"
 RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -

@@ -1,19 +1,17 @@
-# # Installs the current `mysql-server`, version 5.5 at the time of writing
+# ## `mysql-server`
 #
-# Getting Started
+# A mysql image (version 5.5 at the time of writing) that supports external
+# volumes. The login is `docker` with no password.
 #
-#     # cleanup old image
-#     docker rmi mysql
-#     # Build
-#     docker build -t mysql .
-#     # Use
-#     docker run mysql
-#     # Run in background (detached)
-#     docker run -d mysql
-#     # Run in background on port 3306
-#     docker run -d -p 3306:3306 mysql
-#     # Shell in
-#     docker run -i -t mysql /bin/bash
+# ### Example Usage
+#
+# Run in background on port 3306 storing files in `~/volumes/mysql`:
+#
+#     docker run -d -p 3306:3306 -v ~/volumes/mysql:/mnt/mysql/ mysql
+#
+# Fix fubar'd permissions in the remote volume:
+#
+#     docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh /usr/local/bin/fix-permissions.sh
 #
 # References:
 # * https://github.com/kstaken/dockerfile-examples/tree/master/mysql-server
