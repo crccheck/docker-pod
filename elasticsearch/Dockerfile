@@ -9,8 +9,15 @@ MAINTAINER Chris <c@crccheck.com>
 # Java 7 and wget
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 RUN apt-get update
-# TODO try oracle-java7-installer
 RUN apt-get -y install openjdk-7-jre-headless wget
+
+# TODO try oracle-java7-installer
+# I tried this and my image was 787.2 MB (oracle-java7) vs 503.2 MB (openjdk-7)
+# RUN apt-get install software-properties-common
+# RUN apt-apt-repository ppa:webupd8team/java
+# RUN apt-get update
+# RUN echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections
+# RUN apt-get install -y oracle-java7-installer wget
 
 # elasticsearch
 RUN wget --no-check-certificate https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.2.tar.gz
