@@ -4,7 +4,7 @@
 #
 # ### Example Usage
 #
-#     docker run -d -p 5432:5432 -v ~/volumes/postgres/:/mnt/postgres/ postgis
+#     docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
 #
 # References:
 # * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
@@ -38,6 +38,8 @@ RUN chown postgres:postgres -R /etc/postgresql/9.2/main/
 
 ADD start.sh /usr/local/bin/start.sh
 CMD ["sh", "/usr/local/bin/start.sh"]
+
+EXPOSE :5432
 
 # useful reference:
 # https://github.com/orchardup/docker-postgresql

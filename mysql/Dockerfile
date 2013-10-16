@@ -7,7 +7,7 @@
 #
 # Run in background on port 3306 storing files in `~/volumes/mysql`:
 #
-#     docker run -d -p 3306:3306 -v ~/volumes/mysql:/mnt/mysql/ mysql
+#     docker run -d -v ~/volumes/mysql:/mnt/mysql/ mysql
 #
 # Fix fubar'd permissions in the remote volume:
 #
@@ -35,6 +35,8 @@ ADD fix-permissions.sh /usr/local/bin/fix-permissions.sh
 # Put mysql data in a volume
 # https://github.com/dotcloud/docker/wiki/Docker-0.3.0-release-note%2C-May-6-2013#data-volumes
 VOLUME ["/mnt/mysql"]
+
+EXPOSE :3306
 
 # Start mysql server
 ADD start.sh /usr/local/bin/start.sh
