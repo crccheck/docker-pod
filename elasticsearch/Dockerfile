@@ -25,4 +25,7 @@ RUN tar -xzf elasticsearch-0.20.2.tar.gz && rm elasticsearch-0.20.2.tar.gz
 
 EXPOSE :9200
 
+# TODO do permissions better
+VOLUME ["/elasticsearch-0.20.2/data"]
+
 CMD elasticsearch-0.20.2/bin/elasticsearch -f
