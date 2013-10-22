@@ -8,7 +8,7 @@ MAINTAINER Chris <c@crccheck.com>
 
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 RUN apt-get update
-RUN apt-get install -y varnish
+RUN apt-get install -y varnish && apt-get clean
 
 # Make our custom VCLs available on the container
 ADD vcl /usr/local/etc/varnish
