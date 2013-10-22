@@ -1,5 +1,7 @@
 # ## Elasticsearch
+#
 # References:
+#
 # * Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
 # * Simpler Java https://gist.github.com/wingdspur/2026107
 
@@ -20,12 +22,12 @@ RUN apt-get -y install openjdk-7-jre-headless wget
 # RUN apt-get install -y oracle-java7-installer wget
 
 # elasticsearch
-RUN wget --no-check-certificate https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.20.2.tar.gz
-RUN tar -xzf elasticsearch-0.20.2.tar.gz && rm elasticsearch-0.20.2.tar.gz
+RUN wget --no-check-certificate https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.5.tar.gz
+RUN tar -xzf elasticsearch-0.90.5.tar.gz && rm elasticsearch-0.90.5.tar.gz
 
 EXPOSE :9200
 
 # TODO do permissions better
-VOLUME ["/elasticsearch-0.20.2/data"]
+VOLUME ["/elasticsearch-0.90.5/data"]
 
-CMD elasticsearch-0.20.2/bin/elasticsearch -f
+CMD elasticsearch-0.90.5/bin/elasticsearch -f
