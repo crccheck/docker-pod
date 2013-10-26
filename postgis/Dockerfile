@@ -15,7 +15,7 @@ MAINTAINER Chris <c@crccheck.com>
 
 
 RUN apt-get update
-RUN apt-get install -y wget
+RUN apt-get install -y wget && apt-get clean
 
 # put the data directory in a volume
 VOLUME ["/mnt/postgres/"]
@@ -30,7 +30,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /et
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get install -y postgresql-9.2-postgis-2.0
+RUN apt-get install -y postgresql-9.2-postgis-2.0 && apt-get clean
 
 # add configuration file(s)
 ADD conf /etc/postgresql/9.2/main

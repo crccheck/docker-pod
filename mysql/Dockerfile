@@ -23,7 +23,7 @@ MAINTAINER Chris <c@crccheck.com>
 
 
 RUN apt-get update
-RUN apt-get -y install mysql-server
+RUN apt-get -y install mysql-server && apt-get clean
 
 # Load extra mysql config files
 ADD mysql-listen.cnf /etc/mysql/conf.d/mysql-listen.cnf
