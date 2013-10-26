@@ -46,17 +46,32 @@ ground. You can build images yourself by following these instructions:
 ----
 # Dockerfile Documentation
 
+## Elasticsearch
+
+References:
+
+* Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
+* Simpler Java https://gist.github.com/wingdspur/2026107
+
 ## Postgresql 9.2 and Postgis 2.0
 
 A Postgresql 9.2 + Postgis 2.0 image that supports external volumes.
 
 ### Example Usage
 
-    docker run -d -p 5432:5432 -v ~/volumes/postgres/:/mnt/postgres/ postgis
+    docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
 
 References:
 * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
 * http://www.ubuntuupdates.org/ppa/postgresql
+
+## Redis
+
+Installs Redis Server v2.2.12
+
+## Varnish
+
+Installs Varnish Web Accelerator v3.0.2-1
 
 ## `mysql-server`
 
@@ -67,7 +82,7 @@ volumes. The login is `docker` with no password.
 
 Run in background on port 3306 storing files in `~/volumes/mysql`:
 
-    docker run -d -p 3306:3306 -v ~/volumes/mysql:/mnt/mysql/ mysql
+    docker run -d -v ~/volumes/mysql:/mnt/mysql/ mysql
 
 Fix fubar'd permissions in the remote volume:
 
