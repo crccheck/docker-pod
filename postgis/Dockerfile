@@ -1,6 +1,7 @@
 # ## Postgresql 9.2 and Postgis 2.0
 #
-# A Postgresql 9.2 + Postgis 2.0 image that supports external volumes.
+# A Postgresql 9.2 + Postgis 2.0 image that supports external volumes. Runs on
+# port 5432.
 #
 # ### Example Usage
 #
@@ -38,8 +39,6 @@ RUN chown postgres:postgres -R /etc/postgresql/9.2/main/
 
 ADD start.sh /usr/local/bin/start.sh
 CMD ["sh", "/usr/local/bin/start.sh"]
-
-EXPOSE :5432
 
 # useful reference:
 # https://github.com/orchardup/docker-postgresql

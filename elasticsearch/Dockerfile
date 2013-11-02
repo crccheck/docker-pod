@@ -1,5 +1,7 @@
 # ## Elasticsearch
 #
+# Starts an Elasticsearch 0.90.5 container running on port 9200
+#
 # References:
 #
 # * Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
@@ -24,8 +26,6 @@ RUN apt-get -y install openjdk-7-jre-headless wget
 # elasticsearch
 RUN wget --no-check-certificate https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-0.90.5.tar.gz
 RUN tar -xzf elasticsearch-0.90.5.tar.gz && rm elasticsearch-0.90.5.tar.gz
-
-EXPOSE :9200
 
 # TODO do permissions better
 VOLUME ["/elasticsearch-0.90.5/data"]

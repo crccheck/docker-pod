@@ -1,7 +1,7 @@
 # ## `mysql-server`
 #
 # A mysql image (version 5.5 at the time of writing) that supports external
-# volumes. The login is `docker` with no password.
+# volumes. The login is `docker` with no password. Runs on port 3306.
 #
 # ### Example Usage
 #
@@ -35,8 +35,6 @@ ADD fix-permissions.sh /usr/local/bin/fix-permissions.sh
 # Put mysql data in a volume
 # https://github.com/dotcloud/docker/wiki/Docker-0.3.0-release-note%2C-May-6-2013#data-volumes
 VOLUME ["/mnt/mysql"]
-
-EXPOSE :3306
 
 # Start mysql server
 ADD start.sh /usr/local/bin/start.sh

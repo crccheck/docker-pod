@@ -48,6 +48,8 @@ ground. You can build images yourself by following these instructions:
 
 ## Elasticsearch
 
+Starts an Elasticsearch 0.90.5 container running on port 9200
+
 References:
 
 * Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
@@ -55,7 +57,8 @@ References:
 
 ## Postgresql 9.2 and Postgis 2.0
 
-A Postgresql 9.2 + Postgis 2.0 image that supports external volumes.
+A Postgresql 9.2 + Postgis 2.0 image that supports external volumes. Runs on
+port 5432.
 
 ### Example Usage
 
@@ -67,16 +70,16 @@ References:
 
 ## Redis
 
-Installs Redis Server v2.2.12
+Installs Redis Server v2.2.12, runs on port 6379
 
 ## Varnish
 
-Installs Varnish Web Accelerator v3.0.2-1
+Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
 
 ## `mysql-server`
 
 A mysql image (version 5.5 at the time of writing) that supports external
-volumes. The login is `docker` with no password.
+volumes. The login is `docker` with no password. Runs on port 3306.
 
 ### Example Usage
 

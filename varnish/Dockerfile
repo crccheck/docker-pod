@@ -1,6 +1,6 @@
 # ## Varnish
 #
-# Installs Varnish Web Accelerator v3.0.2-1
+# Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
 
 FROM ubuntu:precise
 MAINTAINER Chris <c@crccheck.com>
@@ -12,8 +12,6 @@ RUN apt-get install -y varnish && apt-get clean
 
 # Make our custom VCLs available on the container
 ADD vcl /usr/local/etc/varnish
-
-EXPOSE :80
 
 ADD start.sh /usr/local/bin/start.sh
 CMD ["sh", "/usr/local/bin/start.sh"]
