@@ -11,7 +11,7 @@
 #
 # Fix fubar'd permissions in the remote volume:
 #
-#     docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh /usr/local/bin/fix-permissions.sh
+#     docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh fix-permissions.sh
 #
 # References:
 # * https://github.com/kstaken/dockerfile-examples/tree/master/mysql-server
@@ -28,14 +28,14 @@ RUN apt-get -y install mysql-server && apt-get clean
 # Load extra mysql config files
 ADD mysql-listen.cnf /etc/mysql/conf.d/mysql-listen.cnf
 
-ADD setup.sh /tmp/setup.sh
-RUN /bin/sh /tmp/setup.sh
-ADD fix-permissions.sh /usr/local/bin/fix-permissions.sh
+ADD setup.sh setup.sh
+RUN /bin/sh setup.sh
+ADD fix-permissions.sh fix-permissions.sh
 
 # Put mysql data in a volume
 # https://github.com/dotcloud/docker/wiki/Docker-0.3.0-release-note%2C-May-6-2013#data-volumes
 VOLUME ["/mnt/mysql"]
 
 # Start mysql server
-ADD start.sh /usr/local/bin/start.sh
-CMD ["sh", "/usr/local/bin/start.sh"]
+ADD start.sh start.sh
+CMD ["sh", "start.sh"]

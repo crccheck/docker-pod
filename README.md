@@ -89,7 +89,7 @@ Run in background on port 3306 storing files in `~/volumes/mysql`:
 
 Fix fubar'd permissions in the remote volume:
 
-    docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh /usr/local/bin/fix-permissions.sh
+    docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh fix-permissions.sh
 
 References:
 * https://github.com/kstaken/dockerfile-examples/tree/master/mysql-server

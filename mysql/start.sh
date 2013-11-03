@@ -2,7 +2,7 @@
 
 DATA_DIR=/mnt/mysql
 
-sh /usr/local/bin/fix-permissions.sh
+sh fix-permissions.sh
 
 if [ ! -d $DATA_DIR/mysql ]; then
     mysql_install_db
@@ -17,6 +17,6 @@ if [ ! -d $DATA_DIR/mysql ]; then
     sleep 2
 fi
 
-mysqld_safe
+mysqld_safe --verbose
 
 # TODO tail the logfile so attached session also acts as a log viewer
