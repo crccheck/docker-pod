@@ -1,11 +1,24 @@
-# ## Postgresql 9.3 and Postgis 2.1
+# ## Postgresql 9.3 + Postgis 2.1 + friends
 #
-# A Postgresql 9.3 + Postgis 2.1 image that supports external volumes. Runs on
-# port 5432.
+# A Postgresql 9.3 + Postgis 2.1 image with hstore, plv8, and more!
 #
 # ### Example Usage
 #
-#     docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
+# Start container for the first time:
+#
+#     docker run -d -P -name="pgplus" postgis
+#
+# Tail the log:
+#
+#     docker attach pgplus
+#
+# Stop
+#
+#     docker stop pgplus
+#
+# Start it again
+#
+#    docker start pgplus
 #
 # References:
 # * http://docs.docker.io/en/latest/examples/postgresql_service/
@@ -19,9 +32,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
 RUN apt-get install -y wget && apt-get clean
-
-# put the data directory in a volume
-# VOLUME ["/mnt/postgres/"]
 
 # Add Postgres PPA
 # --no-check-certificate workaround for:
@@ -41,6 +51,8 @@ ADD conf /etc/postgresql/9.3/main
 
 ADD start.sh /
 RUN sh /start.sh
-# CMD ["sh", "/usr/local/bin/start.sh"]
 
-# useful reference:
+EXPOSE 5432
+
+ADD run.sh /
+CMD ["/bin/sh", "/run.sh"]
