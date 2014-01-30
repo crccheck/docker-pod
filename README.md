@@ -55,16 +55,30 @@ References:
 * Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
 * Simpler Java https://gist.github.com/wingdspur/2026107
 
-## Postgresql 9.2 and Postgis 2.0
+## Postgresql 9.3 + Postgis 2.1 + friends
 
-A Postgresql 9.2 + Postgis 2.0 image that supports external volumes. Runs on
-port 5432.
+A Postgresql 9.3 + Postgis 2.1 image with hstore, plv8, and more!
 
 ### Example Usage
 
-    docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
+Start container for the first time:
+
+    docker run -d -P -name="pgplus" postgis
+
+Tail the log:
+
+    docker attach pgplus
+
+Stop
+
+    docker stop pgplus
+
+Start it again
+
+   docker start pgplus
 
 References:
+* http://docs.docker.io/en/latest/examples/postgresql_service/
 * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
 * http://www.ubuntuupdates.org/ppa/postgresql
 
@@ -95,4 +109,17 @@ References:
 * https://github.com/kstaken/dockerfile-examples/tree/master/mysql-server
 * https://github.com/paulczar/docker-mysql/blob/master/Dockerfile
 * http://dischord.org/blog/2013/08/13/docker-and-owncloud-part-2/
+
+## Postgresql 9.2 and Postgis 2.0
+
+A Postgresql 9.2 + Postgis 2.0 image that supports external volumes. Runs on
+port 5432.
+
+### Example Usage
+
+    docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
+
+References:
+* https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
+* http://www.ubuntuupdates.org/ppa/postgresql
 
