@@ -19,7 +19,7 @@ RUN apt-get update
 RUN apt-get install -y wget && apt-get clean
 
 # put the data directory in a volume
-VOLUME ["/mnt/postgres/"]
+# VOLUME ["/mnt/postgres/"]
 
 # Add Postgres PPA
 # --no-check-certificate workaround for:
@@ -37,8 +37,9 @@ RUN apt-get install -y postgresql-9.2-postgis-2.0 && apt-get clean
 ADD conf /etc/postgresql/9.2/main
 RUN chown postgres:postgres -R /etc/postgresql/9.2/main/
 
-ADD start.sh /usr/local/bin/start.sh
-CMD ["sh", "/usr/local/bin/start.sh"]
+ADD start.sh /
+RUN sh /start.sh
+# CMD ["sh", "/usr/local/bin/start.sh"]
 
 # useful reference:
 # https://github.com/orchardup/docker-postgresql
