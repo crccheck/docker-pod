@@ -33,14 +33,14 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /et
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 
 RUN apt-get update
-RUN apt-get install -y postgresql-9.3-postgis-2.1 postgresql-9.3-plv8 && apt-get clean
+RUN apt-get install -y postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 && apt-get clean
 
 # add configuration file(s)
-# ADD conf /etc/postgresql/9.3/main
-# RUN chown postgres:postgres -R /etc/postgresql/9.3/main/
+ADD conf /etc/postgresql/9.3/main
 
-# ADD start.sh /
-# RUN sh /start.sh
+
+ADD start.sh /
+RUN sh /start.sh
 # CMD ["sh", "/usr/local/bin/start.sh"]
 
 # useful reference:
