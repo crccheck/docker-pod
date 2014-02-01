@@ -10,6 +10,8 @@
 FROM ubuntu:precise
 MAINTAINER Chris <c@crccheck.com>
 
+ENV DEBIAN_FRONTEND noninteractive
+
 # Java 7 and wget
 RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
 RUN apt-get update
