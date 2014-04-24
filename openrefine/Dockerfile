@@ -32,5 +32,6 @@ RUN wget --no-check-certificate https://github.com/OpenRefine/OpenRefine/release
 RUN tar -xzf google-refine-2.5-r2407.tar.gz && rm google-refine-2.5-r2407.tar.gz
 
 EXPOSE 3333
+VOLUME ["/mnt/refine"]
 
-CMD ["google-refine-2.5/refine", "-i", "0.0.0.0"]
+CMD ["google-refine-2.5/refine", "-i", "0.0.0.0", "-d", "/mnt/refine"]
