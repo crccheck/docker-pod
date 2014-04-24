@@ -1,6 +1,6 @@
 # ## Google Refine 2.5
 #
-# ## Usage Examples
+# ### Usage Examples
 #
 # Starting the container:
 #
@@ -10,7 +10,7 @@
 #
 #     docker ps
 #
-# ## Links
+# ### Links
 #
 # * Homepage: http://openrefine.org/index.html
 # * FAQ: https://github.com/OpenRefine/OpenRefine/wiki/FAQ

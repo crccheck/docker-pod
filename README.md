@@ -48,6 +48,21 @@ ground. You can build images yourself by following these instructions:
 
 ## Google Refine 2.5
 
+### Usage Examples
+
+Starting the container:
+
+    docker run --name="refine" -P openrefine
+
+Find out which port to connect to:
+
+    docker ps
+
+### Links
+
+* Homepage: http://openrefine.org/index.html
+* FAQ: https://github.com/OpenRefine/OpenRefine/wiki/FAQ
+* Wiki: https://github.com/OpenRefine/OpenRefine/wiki
 
 ## Elasticsearch
 
