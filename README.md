@@ -46,7 +46,7 @@ ground. You can build images yourself by following these instructions:
 ----
 # Dockerfile Documentation
 
-## Google Refine 2.5
+## Open Refine 2.6 beta 1
 
 ### Usage Examples
 
@@ -57,6 +57,10 @@ Starting the container:
 Find out which port to connect to:
 
     docker ps
+
+Starting the container at the default address: http://localhost:3333
+
+    docker run --name="refine" -p 3333:3333 openrefine
 
 ### Links
 

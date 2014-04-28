@@ -1,4 +1,4 @@
-# ## Google Refine 2.5
+# ## Open Refine 2.6 beta 1
 #
 # ### Usage Examples
 #
@@ -9,6 +9,10 @@
 # Find out which port to connect to:
 #
 #     docker ps
+#
+# Starting the container at the default address: http://localhost:3333
+#
+#     docker run --name="refine" -p 3333:3333 openrefine
 #
 # ### Links
 #
@@ -28,10 +32,10 @@ RUN apt-get -y install openjdk-7-jre-headless wget
 
 
 # download and "install"
-RUN wget --no-check-certificate https://github.com/OpenRefine/OpenRefine/releases/download/2.5/google-refine-2.5-r2407.tar.gz
-RUN tar -xzf google-refine-2.5-r2407.tar.gz && rm google-refine-2.5-r2407.tar.gz
+RUN wget --quiet --no-check-certificate https://github.com/OpenRefine/OpenRefine/releases/download/2.6-beta.1/openrefine-linux-2.6-beta.1.tar.gz
+RUN tar -xzf openrefine-linux-2.6-beta.1.tar.gz && rm openrefine-linux-2.6-beta.1.tar.gz
 
 EXPOSE 3333
 VOLUME ["/mnt/refine"]
 
-CMD ["google-refine-2.5/refine", "-i", "0.0.0.0", "-d", "/mnt/refine"]
+CMD ["openrefine-2.6-beta.1/refine", "-i", "0.0.0.0", "-d", "/mnt/refine"]
