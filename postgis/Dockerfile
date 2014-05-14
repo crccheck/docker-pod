@@ -6,7 +6,8 @@
 #
 # Start container for the first time:
 #
-#     docker run -d -P -name="pgplus" postgis
+#     docker run -p 5432:5432 --name="postgis" crccheck/postgis
+#
 #
 # Tail the log:
 #
@@ -22,6 +23,7 @@
 #
 # References:
 # * http://docs.docker.io/en/latest/examples/postgresql_service/
+# * https://github.com/Painted-Fox/docker-postgresql/blob/master/Dockerfile
 # * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
 # * http://www.ubuntuupdates.org/ppa/postgresql
 
@@ -45,14 +47,15 @@ RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sou
 RUN apt-get update
 RUN apt-get install -y postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 && apt-get clean
 
-# add configuration file(s)
-ADD conf /etc/postgresql/9.3/main
+# Allow connections from anywhere.
+RUN sed -i -e"s/^#listen_addresses =.*$/listen_addresses = '*'/" /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "host    all    all    0.0.0.0/0    md5" >> /etc/postgresql/9.3/main/pg_hba.conf
 
+EXPOSE 5432
+VOLUME ['/var/lib/postgresql/9.3/main', '/var/log/postgresql']
 
 ADD start.sh /
 RUN sh /start.sh
-
-EXPOSE 5432
 
 ADD run.sh /
 CMD ["/bin/sh", "/run.sh"]
