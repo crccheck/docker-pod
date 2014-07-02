@@ -68,15 +68,6 @@ Starting the container at the default address: http://localhost:3333
 * FAQ: https://github.com/OpenRefine/OpenRefine/wiki/FAQ
 * Wiki: https://github.com/OpenRefine/OpenRefine/wiki
 
-## Elasticsearch
-
-Starts an Elasticsearch 0.90.5 container running on port 9200
-
-References:
-
-* Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
-* Simpler Java https://gist.github.com/wingdspur/2026107
-
 ## Minecraft 1.7.4
 
 ### Usage
