@@ -68,15 +68,6 @@ Starting the container at the default address: http://localhost:3333
 * FAQ: https://github.com/OpenRefine/OpenRefine/wiki/FAQ
 * Wiki: https://github.com/OpenRefine/OpenRefine/wiki
 
-## Elasticsearch
-
-Starts an Elasticsearch 0.90.5 container running on port 9200
-
-References:
-
-* Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
-* Simpler Java https://gist.github.com/wingdspur/2026107
-
 ## Minecraft 1.7.4
 
 ### Usage
@@ -160,3 +151,20 @@ References:
 * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
 * http://www.ubuntuupdates.org/ppa/postgresql
 
+## Cheatsheet for other useful Docker images
+
+### Elasticsearch
+
+Homepage: https://registry.hub.docker.com/u/dockerfile/elasticsearch/
+Dockerfile: https://github.com/dockerfile/elasticsearch/blob/master/Dockerfile
+
+Persistent data dir:
+
+    docker run -d -p 9200:9200 -p 9300:9300 -v /mnt/elasticsearch:/data \
+        --name="elasticsearch" dockerfile/elasticsearch
+
+And with a custom YAML config located at /mnt/elasticsearch/elasticsearch.yml:
+
+    docker run -d -p 9200:9200 -p 9300:9300 -v /mnt/elasticsearch:/data \
+        --name="elasticsearch" dockerfile/elasticsearch \
+        /elasticsearch/bin/elasticsearch -Des.config=/data/elasticsearch.yml
