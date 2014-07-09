@@ -29,7 +29,7 @@ _start() {
 
     sudo -u www-data -H \
         PYTHON_EGG_CACHE=/srv/thumbor/.egg-cache \
-        "$(which thumbor)" -p 80 2>&1 | ${_logger}
+        "$(which thumbor)"
 }
 
 

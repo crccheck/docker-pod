@@ -5,7 +5,7 @@ ENV APPDIR /srv/thumbor
 ENV THUMBOR_VERSION 4.1.3
 ENV OPENCV_ENGINE_VERSION 1.0.0
 
-EXPOSE 80
+EXPOSE 8888
 
 VOLUME ["/etc/persistent-conf"]
 VOLUME ["/srv/thumbor/storage"]
