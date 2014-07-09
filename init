@@ -1,16 +1,6 @@
 #!/bin/bash
 set -e
 
-if [ ! -e /etc/persistent-conf/ssh/hostkeys/ssh_host_rsa_key ]; then
-    # create ssh host keys and move them to the data store.
-    dpkg-reconfigure openssh-server
-    mkdir -p /etc/persistent-conf/ssh/hostkeys
-    cp /etc/ssh/ssh_host_*_key /etc/ssh/ssh_host_*_key.pub \
-            /etc/persistent-conf/ssh/hostkeys/
-else
-    cp -f /etc/persistent-conf/ssh/hostkeys/ssh_host_*_key* /etc/ssh/
-fi
-
 usermod -d $APPDIR www-data
 mkdir -p $APPDIR/.ssh/
 if [ -e /etc/persistent-conf/ssh/id_rsa ]; then
