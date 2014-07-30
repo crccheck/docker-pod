@@ -24,7 +24,7 @@ _install() {
     if [ -e "requirements" ]; then
         apt-get install \
             --no-install-recommends --ignore-missing --fix-broken -y \
-                $(cat requirements | grep -v "^\(libpngwriter\|libfaac\|libtiffxx0c2\|libavcodec53\|libavformat53\|gstreamer0.10-ffmpeg\|libtiff4\)")
+                $(cat requirements | grep -v "^\(libpngwriter\|libfaac\|libtiffxx0c2\|libavcodec53\|libavformat53\|gstreamer0.10-ffmpeg\|libtiff4\|redis-server\)")
     fi
 
     python setup.py install
