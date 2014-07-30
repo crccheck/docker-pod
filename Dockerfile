@@ -2,8 +2,9 @@ FROM ubuntu:14.04
 MAINTAINER elprans@sprymix.com
 
 ENV APPDIR /srv/thumbor
-ENV THUMBOR_VERSION 4.1.3
-ENV OPENCV_ENGINE_VERSION 1.0.0
+ENV THUMBOR_VERSION 4.2.0
+ENV THUMBOR_ENGINE graphicsmagick
+ENV GRAPHICSMAGICK_ENGINE_VERSION 0.1.1
 
 EXPOSE 8888
 
@@ -15,16 +16,13 @@ ENTRYPOINT ["/init"]
 CMD ["start"]
 
 RUN DEBIAN_FRONTEND=noninteractive \
-        apt-get update && apt-get install -y language-pack-en-base
+        apt-get update && apt-get install --no-install-recommends -y \
+            language-pack-en-base
 
 ENV LANG en_US.UTF-8
 
-RUN DEBIAN_FRONTEND=noninteractive \
-        apt-get install -y \
-                make patch wget unzip nginx zlib1g-dev libxml2-dev \
-                libxslt-dev libcurl4-openssl-dev webp libpng-dev \
-                libtiff-dev libjasper-dev libjpeg-dev libdc1394-22-dev \
-                git python-dev python-pip python-numpy python-opencv \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
+                patch wget unzip python-dev python-pip \
         && apt-get clean
 
 RUN mkdir -p /setup

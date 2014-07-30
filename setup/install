@@ -21,6 +21,12 @@ _install() {
         done
     fi
 
+    if [ -e "requirements" ]; then
+        apt-get install \
+            --no-install-recommends --ignore-missing --fix-broken -y \
+                $(cat requirements | grep -v "^\(libpngwriter\|libfaac\|libtiffxx0c2\|libavcodec53\|libavformat53\|gstreamer0.10-ffmpeg\|libtiff4\)")
+    fi
+
     python setup.py install
 
     if [ -n "$afterhook" ]; then
@@ -36,4 +42,12 @@ _install_thumbor() {
 }
 
 _install thumbor $THUMBOR_VERSION _install_thumbor
-_install opencv-engine $OPENCV_ENGINE_VERSION
+
+if [ "${THUMBOR_ENGINE}" = "opencv" ]; then
+    _install opencv-engine $OPENCV_ENGINE_VERSION
+elif [ "${THUMBOR_ENGINE}" = "graphicsmagick" ]; then
+    _install graphicsmagick-engine $GRAPHICSMAGICK_ENGINE_VERSION
+else
+    echo "ERROR: Unsupported thumbor engine: ${THUMBOR_ENGINE}" >&2
+    exit 1
+fi
