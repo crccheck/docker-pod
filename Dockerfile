@@ -27,8 +27,7 @@
 # * https://registry.hub.docker.com/u/dockerfile/elasticsearch/dockerfile/
 # * https://www.torproject.org/docs/tor-manual.html.en
 
-
-FROM debian:stable
+FROM debian:wheezy
 MAINTAINER Chris <c@crccheck.com>
 
 
