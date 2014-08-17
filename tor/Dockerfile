@@ -5,14 +5,27 @@
 #
 # ### Example Usage:
 #
-# Run tor as a user and get a socks proxy
+# Run tor as a user and get a socks proxy:
 #
 #     dockr run --name tor-socks -p 9050:9050 -v $HOME/volumes/tor-socks:/var/lib/tor crccheck/tor
+#
+# Run a custom configuration file:
+#
+# First, have your own torrc file in ~/volumes/tor-relay/torrc, then:
+#
+#     dockr run --name tor-relay --net=host \
+#       -v $HOME/volumes/tor-relay:/var/lib/tor crccheck/tor \
+#       tor -f /var/lib/tor/torrc
+#
+# Generate a tor hashed password:
+#
+#     dockr run --rm crccheck/tor tor --quiet --hash-password hunter2
 #
 # References:
 #
 # * https://github.com/hsaito/docker-torbox
 # * https://registry.hub.docker.com/u/dockerfile/elasticsearch/dockerfile/
+# * https://www.torproject.org/docs/tor-manual.html.en
 
 
 FROM debian:stable
@@ -27,7 +40,6 @@ RUN apt-get -qq update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tor
 
 ADD torrc /etc/tor/torrc
-ADD start.sh /start.sh
 
 # expose relay port
 EXPOSE 9001
@@ -35,7 +47,12 @@ EXPOSE 9001
 EXPOSE 9050
 # expose control port
 EXPOSE 9051
-# expose data and log
-VOLUME ["/var/lib/tor", "/var/logs/tor"]
+# expose data
+VOLUME ["/data"]
 
-CMD ["/start.sh"]
+WORKDIR /data
+
+# can't do this neatly with external volumes
+# USER debian-tor
+
+CMD ["/usr/sbin/tor"]
