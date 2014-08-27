@@ -1,15 +1,7 @@
 # ## Postgresql 9.3 and Postgis 2.1
 #
-# A Postgresql 9.3 + Postgis 2.1 image that supports external volumes. Runs on
-# port 5432.
-#
-# ### Example Usage
-#
-#     docker run -d -v ~/volumes/postgres/:/mnt/postgres/ crccheck/postgis
-#
-# References:
-# * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
-# * http://www.ubuntuupdates.org/ppa/postgresql
+# A Postgresql 9.3 + Postgis 2.1 image that supports external volumes.
+# https://github.com/crccheck/docker-postgis
 
 FROM ubuntu:14.04
 MAINTAINER Chris <c@crccheck.com>
