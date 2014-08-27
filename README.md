@@ -47,6 +47,11 @@ ground. You can build images yourself by following these instructions:
 ----
 # Dockerfile Documentation
 
+tor
+
+https://github.com/crccheck/docker-tor
+
+
 ## Open Refine 2.6 beta 1
 
 ### Usage Examples
@@ -69,34 +74,9 @@ Starting the container at the default address: http://localhost:3333
 * FAQ: https://github.com/OpenRefine/OpenRefine/wiki/FAQ
 * Wiki: https://github.com/OpenRefine/OpenRefine/wiki
 
-## Elasticsearch
+## Varnish
 
-Starts an Elasticsearch 0.90.5 container running on port 9200
-
-References:
-
-* Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
-* Simpler Java https://gist.github.com/wingdspur/2026107
-
-tor
-
-https://github.com/crccheck/docker-tor
-
-
-## Minecraft 1.7.4
-
-### Usage
-
-Run (has to be on port 25565):
-
-    docker run -d -p 25565:25565 -name="craft" minecraft
-
-References:
-
-* https://github.com/overshard/docker-minecraft/blob/master/Dockerfile
-* https://github.com/spikegrobstein/docker-minecraft-server/blob/master/Dockerfile
-* http://minecraft.gamepedia.com/Tutorials/Setting_up_a_server
-* http://www.minecraftforum.net/topic/420-tutorial-on-running-minecraft-on-a-dedicated-server/
+Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
 
 ## Postgresql 9.3 + Postgis 2.1 + friends
 
@@ -125,13 +105,24 @@ References:
 * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
 * http://www.ubuntuupdates.org/ppa/postgresql
 
+## Minecraft 1.7.4
+
+### Usage
+
+Run (has to be on port 25565):
+
+    docker run -d -p 25565:25565 -name="craft" minecraft
+
+References:
+
+* https://github.com/overshard/docker-minecraft/blob/master/Dockerfile
+* https://github.com/spikegrobstein/docker-minecraft-server/blob/master/Dockerfile
+* http://minecraft.gamepedia.com/Tutorials/Setting_up_a_server
+* http://www.minecraftforum.net/topic/420-tutorial-on-running-minecraft-on-a-dedicated-server/
+
 ## Redis
 
 Installs Redis Server v2.2.12, runs on port 6379
-
-## Varnish
-
-Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
 
 ## Postgresql 9.2 and Postgis 2.0
 
