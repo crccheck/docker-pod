@@ -14,6 +14,7 @@ kill:
 	docker kill postgis
 
 shell:
+	-docker rm postgis 2> /dev/null
 	docker run --rm --name postgis -v ~/volumes/postgis:/data -i -t crccheck/postgis bash
 
 

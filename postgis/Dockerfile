@@ -24,16 +24,25 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq wget
 RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list
 
-# add universe
-# RUN echo "deb http://archive.ubuntu.com/ubuntu trusty universe" >> /etc/apt/sources.list
-
 RUN apt-get update -qq
-# install postgres + postgis
+
+# Change locale to UTF-8 from standard locale ("C")
+RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN echo "LC_ALL=en_US.UTF-8\nLANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8" > /etc/default/locale
+RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN update-locale LANG=en_US.UTF-8
+
+# Install postgres + postgis + client tools so we can use this image as a
+# postgres utility container too
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-client-9.3
 
 RUN mkdir -p /data
 # Update host-based authentification to let remote machines connect
-# TODO change to 'md5'
+# TODO change to 'md5'?
 RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
 # Make sure postgresql is listening, send logs to /data/logs
 RUN echo "listen_addresses = '*'\nlogging_collector = on\nlog_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
