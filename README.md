@@ -78,32 +78,10 @@ Starting the container at the default address: http://localhost:3333
 
 Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
 
-## Postgresql 9.3 + Postgis 2.1 + friends
+## Postgresql 9.3 and PostGIS 2.1
 
-A Postgresql 9.3 + Postgis 2.1 image with hstore, plv8, and more!
-
-### Example Usage
-
-Start container for the first time:
-
-    docker run -d -P -name="pgplus" postgis
-
-Tail the log:
-
-    docker attach pgplus
-
-Stop
-
-    docker stop pgplus
-
-Start it again
-
-   docker start pgplus
-
-References:
-* http://docs.docker.io/en/latest/examples/postgresql_service/
-* https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
-* http://www.ubuntuupdates.org/ppa/postgresql
+A Postgresql 9.3 + Postgis 2.1 image that supports external volumes.
+https://github.com/crccheck/docker-postgis
 
 ## Minecraft 1.7.4
 
@@ -123,17 +101,4 @@ References:
 ## Redis
 
 Installs Redis Server v2.2.12, runs on port 6379
-
-## Postgresql 9.2 and Postgis 2.0
-
-A Postgresql 9.2 + Postgis 2.0 image that supports external volumes. Runs on
-port 5432.
-
-### Example Usage
-
-    docker run -d -v ~/volumes/postgres/:/mnt/postgres/ postgis
-
-References:
-* https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
-* http://www.ubuntuupdates.org/ppa/postgresql
 
