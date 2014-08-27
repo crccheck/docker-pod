@@ -1,9 +1,10 @@
 # My Dockerfile Pod
 
-Written for Docker v0.6. I try to take advantage of [external volumes]. Like
-Docker, these are only suitable for local development and are very much WIP.
-DISCLAIMER: These should not be thought of as the right way to do things. I'm
-just messing around trying to get things to work.
+Written for Docker v0.6-v1.2. I try to take advantage of [external volumes].
+Like Docker, these are only suitable for local development and are very much
+WIP. DISCLAIMER: These should not be thought of as the right way to do things.
+I'm just messing around trying to get things to work. For images that have
+their own repo, the repo's README will have more detail.
 
   [external volumes]: http://blog.docker.io/2013/07/docker-0-5-0-external-volumes-advanced-networking-self-hosted-registry/#external_volumes]
 
@@ -77,6 +78,11 @@ References:
 * Example Dockerfile http://dahernan.github.io/2013/08/04/docker-to-run-elasticsearch/
 * Simpler Java https://gist.github.com/wingdspur/2026107
 
+tor
+
+https://github.com/crccheck/docker-tor
+
+
 ## Minecraft 1.7.4
 
 ### Usage
@@ -126,26 +132,6 @@ Installs Redis Server v2.2.12, runs on port 6379
 ## Varnish
 
 Installs Varnish Web Accelerator v3.0.2-1. Runs on port 80.
-
-## `mysql-server`
-
-A mysql image (version 5.5 at the time of writing) that supports external
-volumes. The login is `docker` with no password. Runs on port 3306.
-
-### Example Usage
-
-Run in background on port 3306 storing files in `~/volumes/mysql`:
-
-    docker run -d -v ~/volumes/mysql:/mnt/mysql/ mysql
-
-Fix fubar'd permissions in the remote volume:
-
-    docker run -v ~/volumes/mysql:/mnt/mysql/ mysql sh fix-permissions.sh
-
-References:
-* https://github.com/kstaken/dockerfile-examples/tree/master/mysql-server
-* https://github.com/paulczar/docker-mysql/blob/master/Dockerfile
-* http://dischord.org/blog/2013/08/13/docker-and-owncloud-part-2/
 
 ## Postgresql 9.2 and Postgis 2.0
 
