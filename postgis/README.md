@@ -1,7 +1,11 @@
 Postgresql 9.3 + Postgis 2.1
 ============================
 
-Lets you use an external volume for data and logs.
+Features:
+* Lets you use an external volume for data and logs
+* en_US.UTF-8 locale
+* includes postgresql-client packages so you can use this image to make utility
+  containers
 
 Login with `docker` and no password.
 

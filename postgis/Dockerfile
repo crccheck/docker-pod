@@ -8,6 +8,17 @@ MAINTAINER Chris <c@crccheck.com>
 
 
 RUN apt-get update -qq
+
+# Change locale to UTF-8 from standard locale ("C")
+RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+# RUN echo "LC_ALL=en_US.UTF-8\nLANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8" > /etc/default/locale
+RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN update-locale LANG=en_US.UTF-8
+
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq wget
 
 # Add Postgres PPA
@@ -17,16 +28,6 @@ RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/ke
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list
 
 RUN apt-get update -qq
-
-# Change locale to UTF-8 from standard locale ("C")
-RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
-ENV LANGUAGE en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-RUN echo "LC_ALL=en_US.UTF-8\nLANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8" > /etc/default/locale
-RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
-RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
-RUN update-locale LANG=en_US.UTF-8
 
 # Install postgres + postgis + client tools so we can use this image as a
 # postgres utility container too
