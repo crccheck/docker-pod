@@ -1,9 +1,10 @@
 # My Dockerfile Pod
 
-Written for Docker v0.6. I try to take advantage of [external volumes]. Like
-Docker, these are only suitable for local development and are very much WIP.
-DISCLAIMER: These should not be thought of as the right way to do things. I'm
-just messing around trying to get things to work.
+Written for Docker v0.6-v1.2. I try to take advantage of [external volumes].
+Like Docker, these are only suitable for local development and are very much
+WIP. DISCLAIMER: These should not be thought of as the right way to do things.
+I'm just messing around trying to get things to work. For images that have
+their own repo, the repo's README will have more detail.
 
   [external volumes]: http://blog.docker.io/2013/07/docker-0-5-0-external-volumes-advanced-networking-self-hosted-registry/#external_volumes]
 
