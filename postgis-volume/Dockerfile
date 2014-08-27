@@ -28,20 +28,28 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc
 # RUN echo "deb http://archive.ubuntu.com/ubuntu trusty universe" >> /etc/apt/sources.list
 
 RUN apt-get update -qq
+# install postgres + postgis
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-client-9.3
 
-RUN echo "host    all             all             0.0.0.0/0               md5" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN mkdir -p /data
+# Update host-based authentification to let remote machines connect
+# TODO change to 'md5'
+RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+# Make sure postgresql is listening
 RUN echo "listen_addresses = '*'" >> /etc/postgresql/9.3/main/postgresql.conf
-# RUN chown postgres:postgres -R /etc/postgresql/9.2/main/
+# Send logs to /data
+RUN echo "log_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
+
+# Change data directory
+RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postgresql/9.3/main/postgresql.conf
 
 EXPOSE 5432
 
-VOLUME ["/etc/postgresql", "/var/log/postgresql", "/var/lib/postgresql"]
+# Let other volumes read config
+# VOLUME ["/etc/postgresql"]
+VOLUME ["/data"]
 
-USER postgres
+# USER postgres
 
 ADD start.sh /usr/local/bin/start.sh
 CMD ["sh", "/usr/local/bin/start.sh"]
-
-# useful reference:
-# https://github.com/orchardup/docker-postgresql
