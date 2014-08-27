@@ -7,9 +7,12 @@ set -e
 
 POSTGRESQL_BIN=/usr/lib/postgresql/9.3/bin/postgres
 POSTGRESQL_CONFIG_FILE=/etc/postgresql/9.3/main/postgresql.conf
-# data_directory
+POSTGRESQL_LOGS=/data/logs
 POSTGRESQL_DATA=/data/postgresql
 
+
+mkdir -p $POSTGRESQL_LOGS
+chown -R postgres:postgres $POSTGRESQL_LOGS
 
 if [ ! -d $POSTGRESQL_DATA ]; then
     mkdir -p $POSTGRESQL_DATA

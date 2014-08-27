@@ -35,10 +35,10 @@ RUN mkdir -p /data
 # Update host-based authentification to let remote machines connect
 # TODO change to 'md5'
 RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
-# Make sure postgresql is listening
-RUN echo "listen_addresses = '*'" >> /etc/postgresql/9.3/main/postgresql.conf
-# Send logs to /data
-RUN echo "log_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
+# Make sure postgresql is listening, send logs to /data/logs
+RUN echo "listen_addresses = '*'\nlogging_collector = on\nlog_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
+# Make logs easier for developers to work with
+RUN echo "log_filename = 'postgresql.log'\nlog_file_mode=0644\nlog_truncate_on_rotation = on\nlog_rotation_age = 7d" >> /etc/postgresql/9.3/main/postgresql.conf
 
 # Change data directory
 RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postgresql/9.3/main/postgresql.conf
