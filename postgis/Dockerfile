@@ -1,58 +1,53 @@
-# ## Postgresql 9.3 + Postgis 2.1 + friends
+# ## Postgresql 9.3 and PostGIS 2.1
 #
-# A Postgresql 9.3 + Postgis 2.1 image with hstore, plv8, and more!
-#
-# ### Example Usage
-#
-# Start container for the first time:
-#
-#     docker run -d -P -name="pgplus" postgis
-#
-# Tail the log:
-#
-#     docker attach pgplus
-#
-# Stop
-#
-#     docker stop pgplus
-#
-# Start it again
-#
-#    docker start pgplus
-#
-# References:
-# * http://docs.docker.io/en/latest/examples/postgresql_service/
-# * https://github.com/orchardup/docker-postgresql/blob/master/Dockerfile
-# * http://www.ubuntuupdates.org/ppa/postgresql
+# A Postgresql 9.3 + Postgis 2.1 image that supports external volumes.
+# https://github.com/crccheck/docker-postgis
 
-FROM ubuntu:precise
+FROM ubuntu:14.04
 MAINTAINER Chris <c@crccheck.com>
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update -qq
 
-RUN apt-get update
-RUN apt-get install -y wget && apt-get clean
+# Change locale to UTF-8 from standard locale ("C")
+RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
+ENV LANGUAGE en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+RUN update-locale LANG=en_US.UTF-8
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq wget
 
 # Add Postgres PPA
 # --no-check-certificate workaround for:
 #     "ERROR: cannot verify www.postgresql.org's certificate"
 RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" >> /etc/apt/sources.list.d/postgresql.list
+RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list
 
-# add universe
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise universe" >> /etc/apt/sources.list
+RUN apt-get update -qq
 
-RUN apt-get update
-RUN apt-get install -y postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 && apt-get clean
+# Install postgres + postgis + client tools so we can use this image as a
+# postgres utility container too
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-client-9.3
 
-# add configuration file(s)
-ADD conf /etc/postgresql/9.3/main
+RUN mkdir -p /data
+# Update host-based authentification to let remote machines connect
+# TODO change to 'md5'?
+RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+# Make sure postgresql is listening, send logs to /data/logs
+RUN echo "listen_addresses = '*'\nlogging_collector = on\nlog_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
+# Make logs easier for developers to work with
+RUN echo "log_filename = 'postgresql.log'\nlog_file_mode=0644\nlog_truncate_on_rotation = on\nlog_rotation_age = 7d" >> /etc/postgresql/9.3/main/postgresql.conf
 
-
-ADD start.sh /
-RUN sh /start.sh
+# Change data directory
+RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postgresql/9.3/main/postgresql.conf
 
 EXPOSE 5432
 
-ADD run.sh /
-CMD ["/bin/sh", "/run.sh"]
+# Let other volumes read config
+# VOLUME ["/etc/postgresql"]
+VOLUME ["/data"]
+
+ADD start.sh /usr/local/bin/start.sh
+CMD ["sh", "/usr/local/bin/start.sh"]
