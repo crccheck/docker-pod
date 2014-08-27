@@ -1,11 +1,10 @@
-# ## Postgresql 9.3 and Postgis 2.1
+# ## Postgresql 9.3 and PostGIS 2.1
 #
 # A Postgresql 9.3 + Postgis 2.1 image that supports external volumes.
 # https://github.com/crccheck/docker-postgis
 
 FROM ubuntu:14.04
 MAINTAINER Chris <c@crccheck.com>
-
 
 RUN apt-get update -qq
 
@@ -14,7 +13,6 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
-# RUN echo "LC_ALL=en_US.UTF-8\nLANG=en_US.UTF-8\nLANGUAGE=en_US.UTF-8" > /etc/default/locale
 RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
@@ -50,8 +48,6 @@ EXPOSE 5432
 # Let other volumes read config
 # VOLUME ["/etc/postgresql"]
 VOLUME ["/data"]
-
-# USER postgres
 
 ADD start.sh /usr/local/bin/start.sh
 CMD ["sh", "/usr/local/bin/start.sh"]
