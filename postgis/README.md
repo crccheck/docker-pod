@@ -22,20 +22,49 @@ Based of the names and examples established in the makefile and using
 
     docker run --detach --name postgis -v ~/volumes/postgis:/data -p 5432:5432 crccheck/postgis
     export DATABASE_URL=postgis://docker@127.0.0.1:5432/states
-    # create the 'states' database
-    phd createdb
-    # psql into 'states' database
-    phd psql
 
-### Creating and connecting to the database without postgresql-client locally
+### Creating a database, "states"
+
+Locally:
+
+    # "states" and connection args were set above in DATABASE_URL
+    phd createdb
+
+Using this image as a utility container:
 
     docker run --rm --name postgis-debug --link postgis:postgis -i -t \
       crccheck/postgis \
       createdb -U docker -h postgis -p 5432 states
 
+### Connect to the database using `psql`
+
+Locally:
+
+    # "states" and connection args were set above in DATABASE_URL
+    phd psql
+
+Using this image as a utility container:
+
     docker run --rm --name postgis-debug --link postgis:postgis -i -t \
       crccheck/postgis \
       psql -U docker -h postgis -p 5432
+
+### Viewing logs
+
+There are two and a half ways to view logs:
+
+1. Tail the logfile locally using the external volume:
+
+        $ tail -f ~/volumes/postgis/logs/postgresql.log
+
+2. Tail the logfile in a utility container using the volume:
+
+        $ docker run --rm --name postgis-debug --volumes-from postgis -i -t \
+          ubuntu tail -f /data/logs/postgresql.log
+
+3. Attach to the running container (I don't think this currently works):
+
+        docker attach --sig-proxy=false postgis
 
 ### Temporarily stopping the container
 
