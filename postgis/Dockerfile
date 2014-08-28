@@ -49,5 +49,5 @@ EXPOSE 5432
 # VOLUME ["/etc/postgresql"]
 VOLUME ["/data"]
 
-ADD start.sh /usr/local/bin/start.sh
-CMD ["sh", "/usr/local/bin/start.sh"]
+ADD start.sh start.sh
+CMD ["sh", "start.sh"]
