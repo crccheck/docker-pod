@@ -1,13 +1,26 @@
 Postgresql 9.3 + PostGIS 2.1
 ============================
 
+This is a PostGIS image suitable for development databases. The real strength
+of this image is external volume support. If you don't need that (i.e. you're
+using boot2docker), you should use a simpler PostGIS image.
+
 Features:
+
 * Lets you use an external volume for data and logs
 * en_US.UTF-8 locale
 * Includes postgresql-client packages so you can use this image to make utility
   containers
 
-Login with `docker` and no password.
+Compromises:
+
+* Weak security to make it easier to connect to
+* Simplified logging to make the logs easier to watch
+
+Auth
+----
+
+Login with the username `docker` and no password.
 
 
 Example PostGIS Lifecycle
