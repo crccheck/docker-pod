@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Helper to manage repetitive syntax of git subtrees.
+#
+# git remotes and directories must have the same name
+#
+set -e
+
+function check_name() {
+  if [ -z $2 ]; then
+    echo "Must enter a name \"pull <name>\""
+    exit 1
+  fi
+}
+
+case "$1" in
+
+  # add all remotes
+  remotes)
+    echo "Adding remotes for other docker images"
+    echo "  zz"
+    git remote add zz git@github.com:crccheck/docker-zz.git 2> /dev/null || true
+    ;;
+
+  # initialize a subtree from an existing remote
+  init)
+    git subtree add --prefix=$2 $2 master
+    ;;
+
+  # pull
+  pull)
+    check_name $*
+    git subtree pull --prefix=$2 $2 master
+    ;;
+
+  # push
+  push)
+    check_name $*
+    git subtree push --prefix=$2 $2 master
+    ;;
+
+esac
