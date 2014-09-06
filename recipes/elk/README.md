@@ -1,8 +1,12 @@
 ELK: ElasticSearch/LogStash/Kibana
 ==================================
 
-For log aggregation
+To demo local log aggregation.
 
+
+A sample ssl generated key is included in ./data. I made it with:
+
+    make certs
 
 Questions
 ---------

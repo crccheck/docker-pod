@@ -60,11 +60,22 @@ shell:
 hello:
 	echo "hello" | nc $$(dockr ip logstash) 3333
 
+# Create self-signed certs for logstash-forwarder and logstash to talk
+#
+# Use wildcard name to fix rejected key:
+# https://github.com/elasticsearch/logstash-forwarder/issues/221
+certs:
+	cd data/keys && openssl req -subj '/CN=*/' -x509 -batch -nodes -days 3650 \
+	  -newkey rsa:2048 \
+      -keyout logstash-forwarder.key -out logstash-forwarder.crt
+	cp data/keys/logstash-forwarder.crt postgis-forwarder/logstash-forwarder.crt
+
 # log my personal `postgis` container
 log_postgis:
-	docker run --rm --name="postgis-logger" --volumes-from postgis \
-	  --link $(logstash):logstash \
-	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \
+	docker run --detach --name="postgis-logger"
+	  --link $(logstash):logstash \  # link network
+	  --volumes-from postgis \  # logs to forward
+	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \  # configs
 	  ahromis/logstash-forwarder
 
 .PHONY: data
