@@ -22,13 +22,17 @@ run_elasticsearch:
 
 # Logstash
 #
-# TODO use a linked container w/ elasticsearch
+# -- web    this keeps the logstash process online (this really the best way?)
 #
-# https://github.com/arcus-io/docker-logstash/blob/master/run.sh
+# https://registry.hub.docker.com/u/pointslope/logstash/dockerfile/
 run_logstash:
 	docker run --detach --name=$(logstash) \
 	  --env ES_HOST=$$(dockr ip elasticsearch) \
-	  pointslope/logstash
+	  --link elasticsearch:es \
+	  --volume ${PWD}/data:/data \
+	  pointslope/logstash \
+	  /opt/logstash/bin/logstash agent --config /data/conf.d \
+	    -- web
 
 # Kibana
 #
@@ -52,9 +56,13 @@ start:
 shell:
 	docker run --rm -i -t --link $(logstash):logstash crccheck/zz /bin/bash
 
+# send test message to logstash, port 3333 was defined as a tcp input in the config
+hello:
+	echo "hello" | nc $$(dockr ip logstash) 3333
 
-logstash.conf.d:
+
+.PHONY: data
+data:
 	docker run --detach --name=logstash-tmp pointslope/logstash
-	docker cp logstash-tmp:/etc/logstash/conf.d .
-	mv conf.d logstash.conf.d
+	docker cp logstash-tmp:/etc/logstash/conf.d data
 	docker rm -f logstash-tmp
