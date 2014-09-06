@@ -28,7 +28,7 @@ run_elasticsearch:
 run_logstash:
 	docker run --detach --name=$(logstash) \
 	  --env ES_HOST=$$(dockr ip elasticsearch) \
-	  arcus/logstash
+	  pointslope/logstash
 
 # Kibana
 #
@@ -51,3 +51,10 @@ start:
 # example: telnet logstash $LOGSTASH_PORT_514_TCP_PORT
 shell:
 	docker run --rm -i -t --link $(logstash):logstash crccheck/zz /bin/bash
+
+
+logstash.conf.d:
+	docker run --detach --name=logstash-tmp pointslope/logstash
+	docker cp logstash-tmp:/etc/logstash/conf.d .
+	mv conf.d logstash.conf.d
+	docker rm -f logstash-tmp
