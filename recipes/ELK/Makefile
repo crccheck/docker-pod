@@ -41,7 +41,13 @@ run_kibana:
 	echo $$(docker port $(kibana) 80)
 
 
-start: start_elasticsearch
-
-start_elasticsearch:
+start:
 	docker start $(elasticsearch)
+	docker start $(logstash)
+	docker start $(kibana)
+
+
+# you're going to want to interact with logstash:514
+# example: telnet logstash $LOGSTASH_PORT_514_TCP_PORT
+shell:
+	docker run --rm -i -t --link $(logstash):logstash crccheck/zz /bin/bash
