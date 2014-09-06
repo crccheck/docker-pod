@@ -1,9 +1,15 @@
 # container names
 elasticsearch=elasticsearch
+logstash=logstash
 kibana=kibana
 
 
-run: run_elasticsearch run_kibana
+# References:
+#
+# * http://evanhazlett.com/2013/08/logstash-and-kibana-via-docker/
+# * https://registry.hub.docker.com/u/pblittle/docker-logstash/
+
+run: run_elasticsearch run_logstash run_kibana
 
 # Elasticsearch
 #
@@ -13,6 +19,16 @@ run: run_elasticsearch run_kibana
 run_elasticsearch:
 	docker run --detach -p 9200 -p 9300 --name=$(elasticsearch) \
 	  dockerfile/elasticsearch
+
+# Logstash
+#
+# TODO use a linked container w/ elasticsearch
+#
+# https://github.com/arcus-io/docker-logstash/blob/master/run.sh
+run_logstash:
+	docker run --detach --name=$(logstash) \
+	  --env ES_HOST=$$(dockr ip elasticsearch) \
+	  arcus/logstash
 
 # Kibana
 #
