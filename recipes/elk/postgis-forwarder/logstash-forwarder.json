@@ -1,0 +1,11 @@
+{
+  "network": {
+    "servers": ["logstash:5000"]
+  },
+  "files": [
+    {
+      "paths": ["/data/logs/*.log"],
+      "fields": {"type": "postgresql", "tags": "postgis"}
+    }
+  ]
+}

@@ -60,6 +60,12 @@ shell:
 hello:
 	echo "hello" | nc $$(dockr ip logstash) 3333
 
+# log my personal `postgis` container
+log_postgis:
+	docker run --rm --name="postgis-logger" --volumes-from postgis \
+	  --link $(logstash):logstash \
+	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \
+	  ahromis/logstash-forwarder
 
 .PHONY: data
 data:
