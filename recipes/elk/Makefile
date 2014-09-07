@@ -72,10 +72,10 @@ certs:
 
 # log my personal `postgis` container
 log_postgis:
-	docker run --detach --name="postgis-logger"
-	  --link $(logstash):logstash \  # link network
-	  --volumes-from postgis \  # logs to forward
-	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \  # configs
+	docker run --detach --name=postgis-logger \
+	  --link $(logstash):logstash \
+	  --volumes-from postgis \
+	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \
 	  ahromis/logstash-forwarder
 
 .PHONY: data

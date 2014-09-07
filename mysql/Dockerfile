@@ -1,4 +1,11 @@
-FROM debian:wheezy
+# Original:
+# https://github.com/docker-library/mysql/blob/master/5.6/docker-entrypoint.sh
+#
+# modified to get running again and to store data and logs in one volume for
+# developer convenience
+
+FROM ubuntu:14.04
+MAINTAINER Chris <c@crccheck.com>
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mysql && useradd -r -g mysql mysql
@@ -8,10 +15,11 @@ RUN groupadd -r mysql && useradd -r -g mysql mysql
 # File::Copy
 # Sys::Hostname
 # Data::Dumper
-RUN apt-get update && apt-get install -y perl --no-install-recommends && rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y perl --no-install-recommends
 
 # mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
-RUN apt-get update && apt-get install -y libaio1 && rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libaio1
 
 # gpg: key 5072E1F5: public key "MySQL Release Engineering <mysql-build@oss.oracle.com>" imported
 RUN gpg --keyserver pgp.mit.edu --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5
@@ -36,11 +44,16 @@ RUN apt-get update && apt-get install -y curl --no-install-recommends && rm -rf 
     && apt-get purge -y --auto-remove binutils
 ENV PATH $PATH:/usr/local/mysql/bin:/usr/local/mysql/scripts
 
+RUN mkdir /data
+VOLUME ["/data"]
+
 WORKDIR /usr/local/mysql
-VOLUME /var/lib/mysql
 
 ADD docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 3306
-CMD ["mysqld", "--datadir=/var/lib/mysql", "--user=mysql"]
+CMD ["mysqld", "--datadir=/data/mysql", \
+  "--general-log", "--general-log-file=/data/logs/mysql.log", \
+  "--slow-query-log=1", "--slow-query-log-file=/data/logs/slow.log", \
+  "--user=mysql"]
