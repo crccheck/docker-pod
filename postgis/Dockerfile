@@ -31,7 +31,6 @@ RUN apt-get update -qq
 # postgres utility container too
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-client-9.3
 
-RUN mkdir -p /data
 # Update host-based authentification to let remote machines connect
 # TODO change to 'md5'?
 RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
@@ -45,8 +44,8 @@ RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postg
 
 EXPOSE 5432
 
-# Let other volumes read config
-# VOLUME ["/etc/postgresql"]
+# Let other volumes read config and logs
+RUN mkdir /data
 VOLUME ["/data"]
 
 ADD start.sh start.sh
