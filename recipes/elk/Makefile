@@ -68,7 +68,11 @@ certs:
 	cd data/keys && openssl req -subj '/CN=*/' -x509 -batch -nodes -days 3650 \
 	  -newkey rsa:2048 \
       -keyout logstash-forwarder.key -out logstash-forwarder.crt
+
+# Copy the cert to each logstash forwarder
+forwarder_certs:
 	cp data/keys/logstash-forwarder.crt postgis-forwarder/logstash-forwarder.crt
+	cp data/keys/logstash-forwarder.crt mysql-forwarder/logstash-forwarder.crt
 
 # log my personal `postgis` container
 log_postgis:
@@ -76,6 +80,14 @@ log_postgis:
 	  --link $(logstash):logstash \
 	  --volumes-from postgis \
 	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \
+	  ahromis/logstash-forwarder
+
+# log my personal `postgis` container
+log_mysql:
+	docker run --detach --name=mysql-logger \
+	  --link $(logstash):logstash \
+	  --volumes-from tt-mysql \
+	  --volume ${PWD}/mysql-forwarder:/etc/logstash-forwarder \
 	  ahromis/logstash-forwarder
 
 .PHONY: data

@@ -1,0 +1,17 @@
+{
+  "network": {
+    "servers": ["logstash:5555"],
+    "timeout": 15,
+    "ssl ca": "/etc/logstash-forwarder/logstash-forwarder.crt"
+  },
+  "files": [
+    {
+      "paths": ["/var/log/syslog"],
+      "fields": {"type": "syslog"}
+    },
+    {
+      "paths": ["/data/logs/*.log"],
+      "fields": {"type": "mysql", "tags": "mysql"}
+    }
+  ]
+}
