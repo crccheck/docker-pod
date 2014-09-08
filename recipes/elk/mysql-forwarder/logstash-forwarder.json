@@ -10,8 +10,12 @@
       "fields": {"type": "syslog"}
     },
     {
-      "paths": ["/data/logs/*.log"],
-      "fields": {"type": "mysql", "tags": "mysql"}
+      "paths": ["/data/logs/mysql.log"],
+      "fields": {"type": "mysql-general", "tags": "mysql"}
+    },
+    {
+      "paths": ["/data/logs/slow.log"],
+      "fields": {"type": "mysql-slow", "tags": "mysql"}
     }
   ]
 }

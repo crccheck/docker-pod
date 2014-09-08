@@ -1,3 +1,5 @@
+# TODO don't use my `dockr` shortcut
+
 # container names
 elasticsearch=elasticsearch
 logstash=logstash
@@ -9,7 +11,7 @@ kibana=kibana
 # * http://evanhazlett.com/2013/08/logstash-and-kibana-via-docker/
 # * https://registry.hub.docker.com/u/pblittle/docker-logstash/
 
-run: run_elasticsearch run_logstash run_kibana
+run: run_elasticsearch logstash run_kibana/run
 
 # Elasticsearch
 #
@@ -25,7 +27,7 @@ run_elasticsearch:
 # -- web    this keeps the logstash process online (this really the best way?)
 #
 # https://registry.hub.docker.com/u/pointslope/logstash/dockerfile/
-run_logstash:
+logstash/run:
 	docker run --detach --name=$(logstash) \
 	  --env ES_HOST=$$(dockr ip elasticsearch) \
 	  --link elasticsearch:es \
@@ -33,6 +35,16 @@ run_logstash:
 	  pointslope/logstash \
 	  /opt/logstash/bin/logstash agent --config /data/conf.d \
 	    -- web
+
+logstash/attach:
+	dockr attach $(logstash)
+
+logstash/clean:
+	-docker stop $(logstash) 2> /dev/null
+	-docker rm $(logstash) 2> /dev/null
+
+# Reload Logstash after configuration change
+logstash: logstash/clean logstash/run logstash/attach
 
 # Kibana
 #
@@ -75,21 +87,24 @@ forwarder_certs:
 	cp data/keys/logstash-forwarder.crt mysql-forwarder/logstash-forwarder.crt
 
 # log my personal `postgis` container
-log_postgis:
+postgis-logger:
 	docker run --detach --name=postgis-logger \
 	  --link $(logstash):logstash \
 	  --volumes-from postgis \
 	  --volume ${PWD}/postgis-forwarder:/etc/logstash-forwarder \
 	  ahromis/logstash-forwarder
 
-# log my personal `postgis` container
-log_mysql:
-	docker run --detach --name=mysql-logger \
+# log my personal mysql container
+mysql-logger:
+	-docker rm -f $@ 2> /dev/null
+	docker run --detach --name=$@ \
 	  --link $(logstash):logstash \
 	  --volumes-from tt-mysql \
 	  --volume ${PWD}/mysql-forwarder:/etc/logstash-forwarder \
 	  ahromis/logstash-forwarder
+	dockr attach $@
 
+# get initial logstash conf from pointslope/logstash
 .PHONY: data
 data:
 	docker run --detach --name=logstash-tmp pointslope/logstash
