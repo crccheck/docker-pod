@@ -7,8 +7,9 @@ for dockerfile in Dockerfile.*; do
     name=${dockerfile##*.}
     echo "Processing $dockerfile -> test/$name"
     tar --transform='s/\..*//' -c --to-stdout $dockerfile | \
-      docker build -t "test/$name" --quiet=true -
+      docker build --tag="test/$name" - > /dev/null
 done
+echo ""
 
 # Report on the images sizes
-docker images | grep test/
+docker images | grep "^test/\|REPOSITORY"

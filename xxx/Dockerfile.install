@@ -1,4 +1,4 @@
-# One command per line
+# Move all the installs to one line
 FROM ubuntu:14.04
 
 RUN apt-get -qq update

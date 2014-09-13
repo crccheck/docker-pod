@@ -1,4 +1,4 @@
-test: clean
+test:
 	./test.sh
 
 # make sure old test images are gone before building new ones
