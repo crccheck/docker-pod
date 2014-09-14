@@ -7,7 +7,7 @@ for dockerfile in Dockerfile.*; do
     name=${dockerfile##*.}
     echo "Processing $dockerfile -> test/$name"
     tar --transform='s/\..*//' -c --to-stdout $dockerfile | \
-      docker build --tag="test/$name" - > /dev/null
+      docker build --tag="test/$name" -
 done
 echo ""
 
