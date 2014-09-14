@@ -1,0 +1,8 @@
+# Add everything and then purge everything
+FROM ubuntu:14.04
+
+RUN apt-get -qq update
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nginx-full
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y apache2-utils
+RUN apt-get purge -y wget nginx-full apache2-utils

@@ -1,0 +1,5 @@
+# Cram installation into one line
+FROM ubuntu:14.04
+
+RUN apt-get -qq update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget nginx-full apache2-utils
