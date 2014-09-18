@@ -6,6 +6,25 @@
 #
 set -e
 
+
+# Print help
+# Trying to conform to http://docopt.org/
+function help() {
+  echo "Usage:"
+  echo "  ./subtree remotes"
+  echo "  ./subtree (init|pull|push) <name> [options]"
+  echo ""
+  echo "Commands:"
+  echo "  remotes  Add all git remotes"
+  echo "  init     Initialize a subtree from <name>'s remote"
+  echo "  pull     Pull in commits from <name>'s remote"
+  echo "  push     Push up commits to <name>'s remote"
+  echo ""
+  echo "Any options you specify pass through to \`git subtree\`"
+}
+
+# Make sure a subtree name was specified as an argument.
+
 function check_name() {
   if [ -z $2 ]; then
     echo "Must enter a name \"pull <name>\""
@@ -14,6 +33,10 @@ function check_name() {
 }
 
 case "$1" in
+
+  help)
+    help
+    ;;
 
   # add all remotes
   remotes)
@@ -37,6 +60,10 @@ case "$1" in
   push)
     check_name $*
     git subtree push --prefix=$2 $2 master
+    ;;
+
+  *)
+    help
     ;;
 
 esac
