@@ -7,6 +7,9 @@
 set -e
 
 
+REMOTES=(
+  "zz:git@github.com:crccheck/docker-zz.git")
+
 # Print help
 # Trying to conform to http://docopt.org/
 function help() {
@@ -41,8 +44,13 @@ case "$1" in
   # add all remotes
   remotes)
     echo "Adding remotes for other docker images"
-    echo "  zz"
-    git remote add zz git@github.com:crccheck/docker-zz.git 2> /dev/null || true
+    # bash 3 friendly associative array http://stackoverflow.com/a/4444841
+    for datum in "${REMOTES[@]}"; do
+      name=${datum%%:*}
+      remote=${datum#*:}
+      echo "  $name"
+      git remote add $name $remote 2> /dev/null || true
+    done
     ;;
 
   # initialize a subtree from an existing remote
