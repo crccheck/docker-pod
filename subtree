@@ -4,11 +4,14 @@
 #
 # git remotes and directories must have the same name
 #
-set -e
 
+# set -e
 
 REMOTES=(
-  "zz:git@github.com:crccheck/docker-zz.git")
+  "postgis:git@github.com:crccheck/docker-postgis.git"
+  "tor:git@github.com:crccheck/docker-tor.git"
+  "zz:git@github.com:crccheck/docker-zz.git"
+)
 
 # Print help
 # Trying to conform to http://docopt.org/
@@ -48,8 +51,13 @@ case "$1" in
     for datum in "${REMOTES[@]}"; do
       name=${datum%%:*}
       remote=${datum#*:}
-      echo "  $name"
-      git remote add $name $remote 2> /dev/null || true
+      echo -en "  $name\t$remote\t"
+      git remote add $name $remote 2> /dev/null
+      if [ $? -eq 0 ]; then
+        echo "[added]"
+      else
+        echo "[skipped]"
+      fi
     done
     ;;
 
