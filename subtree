@@ -8,6 +8,7 @@
 # set -e
 
 REMOTES=(
+  'mysql:git@github.com:crccheck/docker-mysql.git'
   "postgis:git@github.com:crccheck/docker-postgis.git"
   "tor:git@github.com:crccheck/docker-tor.git"
   "zz:git@github.com:crccheck/docker-zz.git"

@@ -1,5 +1,5 @@
 # Original:
-# https://github.com/docker-library/mysql/blob/master/5.6/docker-entrypoint.sh
+# https://github.com/docker-library/mysql/blob/master/5.6
 #
 # modified to get running again and to store data and logs in one volume for
 # developer convenience
