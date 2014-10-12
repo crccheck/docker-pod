@@ -6,7 +6,6 @@ VOLUME_BASE=$(HOME)/volumes/$(NAME)
 # else the configuration files won't get loaded and the database won't be
 # initialized.
 run:
-	@mkdir -p $(VOLUME_BASE)/storage
 	@mkdir -p $(VOLUME_BASE)/log/apache2
 	@mkdir -p $(VOLUME_BASE)/log/supervisor
 	docker run -d --name graphite \
@@ -22,7 +21,6 @@ run_debug:
 	sudo rm -rf $(VOLUME_BASE)/storage
 	rm -rf $(VOLUME_BASE)/log
 
-	@mkdir -p $(VOLUME_BASE)/storage
 	@mkdir -p $(VOLUME_BASE)/log/apache2
 	@mkdir -p $(VOLUME_BASE)/log/supervisor
 	docker run --rm --name graphite \
