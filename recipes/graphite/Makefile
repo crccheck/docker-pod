@@ -13,15 +13,31 @@ test:
 #
 # TODO get storage to work?
 run:
-	# @mkdir -p $(VOLUME_BASE)/storage
+	@mkdir -p $(VOLUME_BASE)/storage
 	@mkdir -p $(VOLUME_BASE)/log/apache2
 	@mkdir -p $(VOLUME_BASE)/log/supervisor
 	docker run -d --name graphite \
 	  -v $(VOLUME_BASE)/conf:/opt/graphite/conf \
 	  -v $(VOLUME_BASE)/log/apache2:/var/log/apache2 \
 	  -v $(VOLUME_BASE)/log/supervisor:/var/log/supervisor \
+	  -v $(VOLUME_BASE)/storage:/opt/graphite/storage \
 	  crccheck/graphite
-	  # -v $(VOLUME_BASE)/storage:/opt/graphite/storage \
+
+# variation of `run` that cleans and runs in the foreground
+# could be more DRY, but meh
+run_debug:
+	sudo rm -rf $(VOLUME_BASE)/storage
+	rm -rf $(VOLUME_BASE)/log
+
+	@mkdir -p $(VOLUME_BASE)/storage
+	@mkdir -p $(VOLUME_BASE)/log/apache2
+	@mkdir -p $(VOLUME_BASE)/log/supervisor
+	docker run --rm --name graphite \
+	  -v $(VOLUME_BASE)/conf:/opt/graphite/conf \
+	  -v $(VOLUME_BASE)/log/apache2:/var/log/apache2 \
+	  -v $(VOLUME_BASE)/log/supervisor:/var/log/supervisor \
+	  -v $(VOLUME_BASE)/storage:/opt/graphite/storage \
+	  crccheck/graphite
 
 
 bash:
