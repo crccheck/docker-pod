@@ -2,16 +2,9 @@ NAME=graphite
 VOLUME_BASE=$(HOME)/volumes/$(NAME)
 
 
-test:
-	echo $(VOLUME_BASE)
-
-# you should run `make conf` prior to running this the first time or else
-# the configuration files won't get loaded
-#
-# you'll need to mess with the permissions so the container's www-data user can
-# write to $(VOLUME_BASE)/storage/log/webapp
-#
-# TODO get storage to work?
+# You should run `make conf storage` prior to running this the first time or
+# else the configuration files won't get loaded and the database won't be
+# initialized.
 run:
 	@mkdir -p $(VOLUME_BASE)/storage
 	@mkdir -p $(VOLUME_BASE)/log/apache2
@@ -46,7 +39,11 @@ bash:
 
 # copy the default configuration for reference
 conf:
-	docker run -d --name tmp-graphite evarga/graphite
-	docker cp tmp-graphite:/opt/graphite/conf $(VOLUME_BASE)
-	docker rm -f tmp-graphite
-	@echo "Graphite config files are now at $(VOLUME_BASE)/conf"
+	docker run --rm --name tmp-graphite evarga/graphite \
+	  tar -c --directory /opt/graphite conf | tar -xv --directory $(VOLUME_BASE)
+
+
+# copy the default configuration for reference
+storage:
+	docker run --rm --name tmp-graphite evarga/graphite \
+	  tar -c --directory /opt/graphite storage | tar -xv --directory $(VOLUME_BASE)
