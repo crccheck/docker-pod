@@ -5,13 +5,17 @@ Graphite is a popular open source graphing library for numeric time series.
 Most people use it for server monitoring. This is based off [smartprocedure]'s
 fix for [evarga]'s graphite Docker image.
 
-Features of this image:
+Differences [smartprocedure]'s Docker image:
 
-* Better support for external volumes for persitence
+* Better support for external volumes for persistence
+* More logs are exposed as volumes
 
   [evarga]: https://registry.hub.docker.com/u/evarga/graphite/
   [smartprocedure]: https://registry.hub.docker.com/u/smartprocure/graphite
 
+This image is only for local development only. Although you can provide a lot
+of your own configuration, many other configuration options, notably the Django
+SECRET_KEY, are unchanged.
 
 Auth
 ----
