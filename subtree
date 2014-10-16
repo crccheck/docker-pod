@@ -4,15 +4,17 @@
 #
 # git remotes and directories must have the same name
 #
+# requires bash 4, see http://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 
 # set -e
 
+declare -A REMOTES
 REMOTES=(
-  'graphite:git@github.com:crccheck/docker-graphite.git'
-  'mysql:git@github.com:crccheck/docker-mysql.git'
-  "postgis:git@github.com:crccheck/docker-postgis.git"
-  "tor:git@github.com:crccheck/docker-tor.git"
-  "zz:git@github.com:crccheck/docker-zz.git"
+  [graphite]=git@github.com:crccheck/docker-graphite.git
+  [mysql]=git@github.com:crccheck/docker-mysql.git
+  [postgis]=git@github.com:crccheck/docker-postgis.git
+  [tor]=git@github.com:crccheck/docker-tor.git
+  [zz]=git@github.com:crccheck/docker-zz.git
 )
 
 # Print help
@@ -50,9 +52,8 @@ case "$1" in
   remotes)
     echo "Adding remotes for other docker images"
     # bash 3 friendly associative array http://stackoverflow.com/a/4444841
-    for datum in "${REMOTES[@]}"; do
-      name=${datum%%:*}
-      remote=${datum#*:}
+    for name in "${!REMOTES[@]}"; do
+      remote=${REMOTES[$name]}
       echo -en "  $name\t$remote\t"
       git remote add $name $remote 2> /dev/null
       if [ $? -eq 0 ]; then
