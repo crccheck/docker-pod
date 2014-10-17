@@ -12,6 +12,10 @@ MAINTAINER Chris <c@crccheck.com>
 # Only needed one change from what Ervin Varga had in his repo.
 RUN mkdir -p /var/run/apache2
 
+# Fix Django admin css not showing
+RUN sed -i "s|@DJANGO_ROOT@|/usr/lib/python2.7/dist-packages/django/|" \
+      /etc/apache2/sites-available/default
+
 # Expose log files
 # XXX should I just adjust the config files to send them to a mount instead?
 VOLUME ["/var/log/apache2", "/var/log/supervisor"]

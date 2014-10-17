@@ -2,6 +2,10 @@ NAME=graphite
 VOLUME_BASE=$(HOME)/volumes/$(NAME)
 
 
+build:
+	docker build -t crccheck/graphite .
+
+
 # You should run `make conf storage` prior to running this the first time or
 # else the configuration files won't get loaded and the database won't be
 # initialized.
