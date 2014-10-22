@@ -12,6 +12,24 @@ Extras:
 * wget
 
 
+Usage
+-----
+
+### As a CoreOS toolbox
+
+You can use this image as your [CoreOS toolbox](https://coreos.com/docs/cluster-management/debugging/install-debugging-tools/):
+
+```bash
+# set toolboxrc
+echo "TOOLBOX_DOCKER_IMAGE=crccheck/zz" > ~/.toolboxrc
+
+# start toolbox
+toolbox
+```
+
+You can then access the parent filesystem at `/media/root`.
+
+
 Why `zz`?
 ---------
 
