@@ -41,11 +41,13 @@ bash:
 
 # copy the default configuration for reference
 conf:
+	@mkdir -p $(VOLUME_BASE)
 	docker run --rm --name tmp-graphite evarga/graphite \
 	  tar -c --directory /opt/graphite conf | tar -xv --directory $(VOLUME_BASE)
 
 
 # copy the default configuration for reference
 storage:
+	@mkdir -p $(VOLUME_BASE)
 	docker run --rm --name tmp-graphite evarga/graphite \
 	  tar -c --directory /opt/graphite storage | tar -xv --directory $(VOLUME_BASE)
