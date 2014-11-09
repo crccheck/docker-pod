@@ -11,6 +11,7 @@
 declare -A REMOTES
 REMOTES=(
   [graphite]=git@github.com:crccheck/docker-graphite.git
+  [hello-world]=git@github.com:crccheck/docker-hello-world.git
   [mysql]=git@github.com:crccheck/docker-mysql.git
   [postgis]=git@github.com:crccheck/docker-postgis.git
   [tor]=git@github.com:crccheck/docker-tor.git
@@ -34,10 +35,17 @@ function help() {
 }
 
 # Make sure a subtree name was specified as an argument.
-
 function check_name() {
   if [ -z $2 ]; then
-    echo "Must enter a name \"pull <name>\""
+    echo "ERROR: No <name>"
+    echo ""
+    help
+    exit 1
+  fi
+  if [ ! ${REMOTES[$2]+_} ]; then
+    echo "ERROR: $2 is not a known remote"
+    echo ""
+    help
     exit 1
   fi
 }
@@ -51,7 +59,6 @@ case "$1" in
   # add all remotes
   remotes)
     echo "Adding remotes for other docker images"
-    # bash 3 friendly associative array http://stackoverflow.com/a/4444841
     for name in "${!REMOTES[@]}"; do
       remote=${REMOTES[$name]}
       echo -en "  $name\t$remote\t"
@@ -66,6 +73,7 @@ case "$1" in
 
   # initialize a subtree from an existing remote
   init)
+    check_name $*
     git subtree add --prefix=$2 $2 master
     ;;
 
