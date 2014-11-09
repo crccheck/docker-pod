@@ -11,6 +11,11 @@ crccheck/hello-world     latest    3fb806978748    7 minutes ago    2.434 MB
 ```
 
 
+Details
+-------
+* Ports Exposed: 8000
+
+
 Sample Usage
 ------------
 
@@ -21,18 +26,19 @@ $ docker run -d --name web-test -p 80:8000 crccheck/hello-world
 ```
 
 You can now interact with this as if it were a dumb web server:
-```
+
+```bash
 $ curl localhost
 Hello World
 ...
 
-# Every request returns the same thing
+$ # Every request returns the same thing
 $ curl -X POST localhost/super/secret
 Hello World
 ...
 
-# Does not send actual HTTP responses (this should probably change so this can
-# be used with load balancers)
+$ # Does not send actual HTTP responses (this should probably change so this can
+$ # be used with load balancers)
 $ curl --write-out %{http_code} --silent --output /dev/null localhost
 000
 ```
