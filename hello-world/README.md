@@ -42,3 +42,6 @@ $ # be used with load balancers)
 $ curl --write-out %{http_code} --silent --output /dev/null localhost
 000
 ```
+
+----
+[pod](https://github.com/crccheck/docker-pod)

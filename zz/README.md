@@ -27,6 +27,17 @@ echo "TOOLBOX_DOCKER_IMAGE=crccheck/zz" > ~/.toolboxrc
 toolbox
 ```
 
+or by adding this to your `user-data`:
+
+```yaml
+write_files:
+  - path: /home/core/.toolboxrc
+    owner: core:core
+    permissions: 0644
+    content: |
+      TOOLBOX_DOCKER_IMAGE=crccheck/zz
+```
+
 You can then access the parent filesystem at `/media/root`.
 
 
@@ -36,3 +47,7 @@ Why `zz`?
 1. It's very fast to type.
 2. It's very rare. I've never seen anyone else use `zz`.
 3. It shows up last alphabetically.
+
+
+----
+[pod](https://github.com/crccheck/docker-pod)
