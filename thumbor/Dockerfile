@@ -1,8 +1,10 @@
+# Based on https://github.com/sprymix/docker-thumbor
+# and https://github.com/miracle2k/dockerfiles/tree/master/thumbor
 FROM ubuntu:14.04
 MAINTAINER elprans@sprymix.com
 
 ENV APPDIR /srv/thumbor
-ENV THUMBOR_VERSION 4.2.0
+ENV THUMBOR_VERSION 4.4.1
 ENV THUMBOR_ENGINE graphicsmagick
 ENV GRAPHICSMAGICK_ENGINE_VERSION 0.1.1
 
