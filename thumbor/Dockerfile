@@ -4,8 +4,12 @@ FROM ubuntu:14.04
 MAINTAINER elprans@sprymix.com
 
 ENV APPDIR /srv/thumbor
-ENV THUMBOR_VERSION 4.4.1
+# see https://github.com/thumbor/thumbor/releases
+ENV THUMBOR_VERSION 4.8.0
+# see https://github.com/thumbor/opencv-engine/releases
+# ENV OPENCV_ENGINE_VERSION 1.0.0
 ENV THUMBOR_ENGINE graphicsmagick
+# see https://github.com/thumbor/graphicsmagick-engine/releases
 ENV GRAPHICSMAGICK_ENGINE_VERSION 0.1.1
 
 EXPOSE 8888
@@ -26,8 +30,6 @@ ENV LANG en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
                 patch wget unzip python-dev python-pip \
         && apt-get clean
-
-RUN mkdir -p /setup
 
 ADD setup /setup
 RUN DEBIAN_FRONTEND=noninteractive \
