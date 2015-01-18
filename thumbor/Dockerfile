@@ -5,7 +5,7 @@ MAINTAINER elprans@sprymix.com
 
 ENV APPDIR /srv/thumbor
 # see https://github.com/thumbor/thumbor/releases
-ENV THUMBOR_VERSION 4.8.0
+ENV THUMBOR_VERSION 4.8.5
 # see https://github.com/thumbor/opencv-engine/releases
 # ENV OPENCV_ENGINE_VERSION 1.0.0
 ENV THUMBOR_ENGINE graphicsmagick
