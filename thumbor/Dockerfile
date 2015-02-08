@@ -31,6 +31,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     patch wget unzip python-dev python-pip > /dev/null && \
     apt-get clean
 
+# warning: GMP or MPIR library not found; Not building Crypto.PublicKey._fastmath
+RUN pip install pycrypto > /dev/null
 ADD setup /setup
 RUN DEBIAN_FRONTEND=noninteractive /setup/install > /dev/null
 
