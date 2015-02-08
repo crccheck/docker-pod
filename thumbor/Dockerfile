@@ -1,7 +1,7 @@
 # Based on https://github.com/sprymix/docker-thumbor
 # and https://github.com/miracle2k/dockerfiles/tree/master/thumbor
 FROM ubuntu:14.04
-MAINTAINER elprans@sprymix.com
+MAINTAINER c@crccheck.com
 
 ENV APPDIR /srv/thumbor
 # see https://github.com/thumbor/thumbor/releases
@@ -21,22 +21,20 @@ VOLUME ["/dev/log"]
 ENTRYPOINT ["/init"]
 CMD ["start"]
 
+RUN apt-get update -qq
+# why do I need this?
 RUN DEBIAN_FRONTEND=noninteractive \
-        apt-get update && apt-get install --no-install-recommends -y \
-            language-pack-en-base
-
+    apt-get install --no-install-recommends -y language-pack-en-base > /dev/null
 ENV LANG en_US.UTF-8
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
-                patch wget unzip python-dev python-pip \
-        && apt-get clean
+    patch wget unzip python-dev python-pip > /dev/null && \
+    apt-get clean
 
 ADD setup /setup
-RUN DEBIAN_FRONTEND=noninteractive \
-        /setup/install
+RUN DEBIAN_FRONTEND=noninteractive /setup/install > /dev/null
 
 ADD config /setup/config
-RUN DEBIAN_FRONTEND=noninteractive \
-        /setup/configure
+RUN DEBIAN_FRONTEND=noninteractive /setup/configure > /dev/null
 
 ADD init /init

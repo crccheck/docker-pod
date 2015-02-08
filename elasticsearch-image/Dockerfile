@@ -6,6 +6,7 @@
 
 # Pull base image.
 FROM dockerfile/java:oracle-java7
+MAINTAINER c@crccheck.com
 
 ENV ES_PKG_NAME elasticsearch-1.0.3
 
