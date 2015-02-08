@@ -1,6 +1,4 @@
-# docker-thumbor
-
-Dockerfile to build a [Thumbor](https://github.com/thumbor/thumbor) container.
+# [Thumbor](https://github.com/thumbor/thumbor) v4.8.7
 
 
 #### Testing the container
