@@ -1,8 +1,8 @@
 FROM debian:jessie
 
-ENV GAP_VERSION 1.0
-ENV GO_VERSION 1.3
-ENV MD5_SUM eb698b3dfce38c2866232a14a8de0f48
+ENV GAP_VERSION 1.1
+ENV GO_VERSION 1.4.2
+ENV MD5_SUM afcfc10be3da9e1ae728eb448a0b53f8
 
 RUN apt-get update -q
 RUN apt-get install -qy wget
