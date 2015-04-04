@@ -9,7 +9,7 @@ MAINTAINER Chris <c@crccheck.com>
 RUN apt-get update -qq
 
 # Change locale to UTF-8 from standard locale ("C")
-RUN DEBIAN_FRONTEND=noninteractive apt-get -yq install language-pack-en
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install language-pack-en > /dev/null
 ENV LANGUAGE en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
@@ -17,7 +17,11 @@ RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq wget
+# Prereq for this install
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget > /dev/null
+
+ENV POSTGRES_VERSION 9.3
+ENV POSTGIS_VERSION 2.1
 
 # Add Postgres PPA
 # --no-check-certificate workaround for:
@@ -29,18 +33,23 @@ RUN apt-get update -qq
 
 # Install postgres + postgis + client tools so we can use this image as a
 # postgres utility container too
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq postgresql-9.3-postgis-2.1 postgresql-contrib-9.3 postgresql-9.3-plv8 postgresql-client-9.3
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+  postgresql-${POSTGRES_VERSION}-postgis-${POSTGIS_VERSION} \
+  postgresql-contrib-${POSTGRES_VERSION} \
+  postgresql-${POSTGRES_VERSION}-plv8 \
+  postgresql-client-${POSTGRES_VERSION} \
+  > /dev/null
 
 # Update host-based authentification to let remote machines connect
 # TODO change to 'md5'?
-RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/9.3/main/pg_hba.conf
+RUN echo "host    all    all    0.0.0.0/0     trust" >> /etc/postgresql/${POSTGRES_VERSION}/main/pg_hba.conf
 # Make sure postgresql is listening, send logs to /data/logs
-RUN echo "listen_addresses = '*'\nlogging_collector = on\nlog_directory = '/data/logs'" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "listen_addresses = '*'\nlogging_collector = on\nlog_directory = '/data/logs'" >> /etc/postgresql/${POSTGRES_VERSION}/main/postgresql.conf
 # Make logs easier for developers to work with
-RUN echo "log_filename = 'postgresql.log'\nlog_file_mode=0644\nlog_truncate_on_rotation = on\nlog_rotation_age = 7d" >> /etc/postgresql/9.3/main/postgresql.conf
+RUN echo "log_filename = 'postgresql.log'\nlog_file_mode=0644\nlog_truncate_on_rotation = on\nlog_rotation_age = 7d" >> /etc/postgresql/${POSTGRES_VERSION}/main/postgresql.conf
 
 # Change data directory
-RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postgresql/9.3/main/postgresql.conf
+RUN sed -i "s@^data_directory.+@data_directory = '/data/postgresql'@" /etc/postgresql/${POSTGRES_VERSION}/main/postgresql.conf
 
 EXPOSE 5432
 

@@ -5,8 +5,8 @@
 
 set -e
 
-POSTGRESQL_BIN=/usr/lib/postgresql/9.3/bin/postgres
-POSTGRESQL_CONFIG_FILE=/etc/postgresql/9.3/main/postgresql.conf
+POSTGRESQL_BIN=/usr/lib/postgresql/${POSTGRES_VERSION}/bin/postgres
+POSTGRESQL_CONFIG_FILE=/etc/postgresql/${POSTGRES_VERSION}/main/postgresql.conf
 POSTGRESQL_LOGS=/data/logs
 POSTGRESQL_DATA=/data/postgresql
 
@@ -17,7 +17,7 @@ chown -R postgres:postgres $POSTGRESQL_LOGS
 if [ ! -d $POSTGRESQL_DATA ]; then
     mkdir -p $POSTGRESQL_DATA
     chown -R postgres:postgres $POSTGRESQL_DATA
-    su postgres -c "/usr/lib/postgresql/9.3/bin/initdb -D $POSTGRESQL_DATA"
+    su postgres -c "/usr/lib/postgresql/${POSTGRES_VERSION}/bin/initdb -D $POSTGRESQL_DATA"
 fi
 
 su postgres -c "$POSTGRESQL_BIN --single --config-file=$POSTGRESQL_CONFIG_FILE <<< \"CREATE USER docker WITH SUPERUSER;\""
