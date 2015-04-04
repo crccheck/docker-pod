@@ -2,6 +2,9 @@
 build:
 	docker build -t crccheck/postgis .
 
+build/force:
+	docker build --no-cache -t crccheck/postgis .
+
 # start a postgis container
 run: clean
 	docker run --detach --name postgis -v ~/volumes/postgis:/data -p 5432 crccheck/postgis

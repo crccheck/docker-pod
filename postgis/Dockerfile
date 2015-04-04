@@ -17,23 +17,19 @@ RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
 
-# Prereq for this install
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y wget > /dev/null
-
 ENV POSTGRES_VERSION 9.3
 ENV POSTGIS_VERSION 2.1
 
 # Add Postgres PPA
-# --no-check-certificate workaround for:
-#     "ERROR: cannot verify www.postgresql.org's certificate"
-RUN wget --no-check-certificate --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+ADD https://www.postgresql.org/media/keys/ACCC4CF8.asc /tmp/ACCC4CF8.asc
+RUN apt-key add /tmp/ACCC4CF8.asc
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" >> /etc/apt/sources.list
 
 RUN apt-get update -qq
 
 # Install postgres + postgis + client tools so we can use this image as a
 # postgres utility container too
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -yq \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
   postgresql-${POSTGRES_VERSION}-postgis-${POSTGIS_VERSION} \
   postgresql-contrib-${POSTGRES_VERSION} \
   postgresql-${POSTGRES_VERSION}-plv8 \
