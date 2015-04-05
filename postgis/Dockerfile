@@ -1,6 +1,6 @@
-# ## Postgresql 9.3 and PostGIS 2.1
+# ## PostgreSQL+PostGIS
 #
-# A Postgresql 9.3 + Postgis 2.1 image that supports external volumes.
+# A PostgreSQL + Postgis image that supports external volumes.
 # https://github.com/crccheck/docker-postgis
 
 FROM ubuntu:14.04
@@ -17,7 +17,7 @@ RUN DEBIAN_FRONTEND=noninteractive locale-gen en_US.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 RUN update-locale LANG=en_US.UTF-8
 
-ENV POSTGRES_VERSION 9.3
+ENV POSTGRES_VERSION 9.4
 ENV POSTGIS_VERSION 2.1
 
 # Add Postgres PPA
