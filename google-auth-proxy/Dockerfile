@@ -1,4 +1,5 @@
 FROM alpine:3.1
+MAINTAINER Chris <c@crccheck.com>
 
 ENV GAP_VERSION 1.1.1
 ENV GO_VERSION 1.4.2
