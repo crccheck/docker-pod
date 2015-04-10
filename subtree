@@ -11,6 +11,7 @@
 declare -A REMOTES
 REMOTES=(
   [elasticsearch]=git@github.com:crccheck/elasticsearch.git
+  [google-auth-proxy]=git@github.com:crccheck/docker-google-auth-proxy.git
   [graphite]=git@github.com:crccheck/docker-graphite.git
   [hello-world]=git@github.com:crccheck/docker-hello-world.git
   [mysql]=git@github.com:crccheck/docker-mysql.git
