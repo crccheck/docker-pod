@@ -9,5 +9,4 @@ RUN echo "${MD5_SUM}  google_auth_proxy-${GAP_VERSION}.linux-amd64.go${GO_VERSIO
 RUN md5sum --check google_auth_proxy.md5
 RUN tar --strip-components=1 -zxf google_auth_proxy-${GAP_VERSION}.linux-amd64.go${GO_VERSION}.tar.gz
 
-ENTRYPOINT ["./google_auth_proxy"]
-CMD ["-help"]
+CMD ["./google_auth_proxy", "-help"]
