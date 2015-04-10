@@ -11,9 +11,9 @@ Configuration
 
 Documentation is here: https://github.com/bitly/google_auth_proxy#configuration
 
-The entry point is configured such that you can pass options right into your run command:
+Run the image like:
 
-    docker run crccheck/google-auth-proxy -upstream=... -redirect-url=...
+    docker run crccheck/google-auth-proxy google_auth_proxy -upstream=... -redirect-url=...
 
 Consider using environment variables for secrets such as:
 
