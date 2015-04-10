@@ -1,4 +1,4 @@
-FROM alpine:3.1
+FROM mini/base
 MAINTAINER Chris <c@crccheck.com>
 
 ENV GAP_VERSION 1.1.1
