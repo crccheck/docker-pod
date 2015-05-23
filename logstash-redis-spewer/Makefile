@@ -15,6 +15,9 @@ spew:
 	@-docker rm -f $(NAME)_temp 2>/dev/null || true
 	docker run --rm --name $(NAME)_temp -it -e MAX_COUNT=1000 $(NAME)
 
+tail:
+	docker logs --follow $(NAME)_1
+
 elk: run
 	@-docker rm -f spew_elk 2>/dev/null || true
 	docker run -d --name=spew_elk \

@@ -14,6 +14,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
       > /dev/null
 EXPOSE 6379
 
+RUN sed -i "s/^bind.*/bind 0.0.0.0/" /etc/redis/redis.conf
+
 COPY entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
 
