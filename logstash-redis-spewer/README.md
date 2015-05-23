@@ -14,6 +14,6 @@ Usage
 
 * `LIST_NAME=<string>`: The name of the Redis list (default: `logstash`)
 * `DOC_TYPE=<string>: The document type to give the messages (default: `spew`)
-* _TODO_ `MAX_COUNT`=<int>: The maximum number of events this list should grow to
-  (default: infinity)
+* `MAX_COUNT`=<int>: The maximum number of events this list should grow to. Due
+  to race conditions, the number is only approximate. (default: infinity)
 * _TODO_ `DATE_FROM`=<??>: The timestamp to begin filling dates from
