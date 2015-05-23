@@ -9,4 +9,4 @@ bash:
 
 spew:
 	@-docker rm -f $(NAME)_temp 2>/dev/null || true
-	docker run --rm --name $(NAME)_temp -it $(NAME) /spew.sh
+	docker run --rm --name $(NAME)_temp -it $(NAME)

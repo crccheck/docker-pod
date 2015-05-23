@@ -12,7 +12,8 @@ Usage
 
 #### Environment Variables
 
-* `LIST_NAME=<>`: The name of the Redis list (default: `logstash`)
-* `MAX_COUNT`: The maximum number of events this list should grow to (default:
-  infinity)
-* `DATE_FROM`: The timestamp to begin filling dates from
+* `LIST_NAME=<string>`: The name of the Redis list (default: `logstash`)
+* `DOC_TYPE=<string>: The document type to give the messages (default: `spew`)
+* _TODO_ `MAX_COUNT`=<int>: The maximum number of events this list should grow to
+  (default: infinity)
+* _TODO_ `DATE_FROM`=<??>: The timestamp to begin filling dates from
