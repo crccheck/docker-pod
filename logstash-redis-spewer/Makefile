@@ -23,6 +23,8 @@ elk: run
 	docker run -d --name=spew_elk \
 	  -v ${PWD}/logstash_config:/opt/logstash/conf.d \
 	  --link $(NAME)_1:redis \
+	  -p 9200:9200 \
+	  -p 9292:9292 \
 	  pblittle/docker-logstash
 
 elk/bash:

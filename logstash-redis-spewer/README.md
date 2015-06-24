@@ -17,3 +17,15 @@ Usage
 * `MAX_COUNT`=<int>: The maximum number of events this list should grow to. Due
   to race conditions, the number is only approximate. (default: infinity)
 * _TODO_ `DATE_FROM`=<??>: The timestamp to begin filling dates from
+
+#### Starting the built in ELK stack
+
+```
+make elk
+```
+
+#### Checking out
+
+/_count?q=_type:spew
+
+/_search?q=_type:spew
