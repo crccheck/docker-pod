@@ -17,6 +17,7 @@ REMOTES=(
   [mysql]=git@github.com:crccheck/docker-mysql.git
   [postgis]=git@github.com:crccheck/docker-postgis.git
   [requestbin]=git@github.com:crccheck/docker-requestbin.git
+  [tcpdump]=git@github.com:crccheck/docker-tcpdump.git
   [thumbor]=git@github.com:crccheck/docker-thumbor.git
   [tor]=git@github.com:crccheck/docker-tor.git
   [zz]=git@github.com:crccheck/docker-zz.git
