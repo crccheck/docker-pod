@@ -3,8 +3,8 @@ services:
   redis:
     image: redis
   requestbin:
-    # image: crccheck/requestbin
-    build: .
+    image: crccheck/requestbin
+    # build: .
     depends_on:
       - redis
     environment:

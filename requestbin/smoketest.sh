@@ -1,13 +1,11 @@
 #!/usr/bin/env bash
-container=requestbin_1
+container=requestbin_requestbin_1
 
 set -e
 
 function lookfor {
   grep --silent "$@" && echo " . . . PASS" || echo " . . . FAIL"
 }
-
-make run > /dev/null
 
 IP=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' ${container})
 # make sure we can start a docker container
@@ -26,5 +24,3 @@ echo -n "CSS styles should load"
 
 echo -n "Static files should load"
 \curl --silent --head $IP/static/img/logo-2x.png | lookfor "Content-Type: image/png"
-
-make clean > /dev/null
